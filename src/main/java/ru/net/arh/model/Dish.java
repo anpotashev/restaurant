@@ -1,9 +1,8 @@
 package ru.net.arh.model;
 
-import lombok.*;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 

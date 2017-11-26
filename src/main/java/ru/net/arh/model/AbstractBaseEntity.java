@@ -1,13 +1,14 @@
 package ru.net.arh.model;
 
-import jdk.nashorn.internal.objects.annotations.Constructor;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+
 import javax.persistence.*;
 
 //lombok
 @Slf4j
-@Getter @Setter
+@Getter
+@Setter
 @EqualsAndHashCode
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)

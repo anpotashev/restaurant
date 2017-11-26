@@ -10,7 +10,8 @@ import java.time.LocalDate;
 
 @Slf4j
 @EqualsAndHashCode
-@Entity @IdClass(VoteId.class)
+@Entity
+@IdClass(VoteId.class)
 @Table(name = "vote",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "date"}, name = "vote_unique_user_date_idx")})
 public class Vote {

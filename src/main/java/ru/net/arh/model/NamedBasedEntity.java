@@ -1,6 +1,9 @@
 package ru.net.arh.model;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.Access;
@@ -12,7 +15,8 @@ import javax.validation.constraints.Size;
 
 //lombok
 @Slf4j
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 //persitence
 @MappedSuperclass
@@ -28,6 +32,7 @@ public class NamedBasedEntity extends AbstractBaseEntity {
         super(id);
         this.name = name;
     }
+
     @Override
     public String toString() {
         return super.toString() + " [name: " + name + "]";

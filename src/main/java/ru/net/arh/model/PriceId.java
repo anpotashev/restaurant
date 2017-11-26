@@ -15,7 +15,8 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Slf4j
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Embeddable
