@@ -1,6 +1,8 @@
 package ru.net.arh.model;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
@@ -9,6 +11,8 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Slf4j
+@Getter
+@Setter
 @EqualsAndHashCode
 @Entity
 @IdClass(VoteId.class)

@@ -89,6 +89,12 @@
             <scope>provided</scope>
         </dependency>
 
+        <!--spring-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+
         <!--loggin-->
         <dependency>
             <groupId>org.slf4j</groupId>
