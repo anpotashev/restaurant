@@ -26,8 +26,10 @@
 
         <lombok.version>1.16.18</lombok.version>
         <spring.version>4.3.10.RELEASE</spring.version>
+        <spring-jpa.version>2.0.8</spring-jpa.version>
         <hibernate.version>5.2.12.Final</hibernate.version>
         <hibernate-validator.version>6.0.5.Final</hibernate-validator.version>
+        <postgresql.version>42.1.4</postgresql.version>
     </properties>
     <build>
         <plugins>
@@ -94,6 +96,19 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jpa</artifactId>
+            <version>${spring-jpa.version}</version>
+        </dependency>
 
         <!--loggin-->
         <dependency>
@@ -121,6 +136,11 @@
             <scope>runtime</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>

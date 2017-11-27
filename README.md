@@ -43,3 +43,17 @@ Tables:
     - user_id (pk)
     - role (pk)
 
+REST:
+
+|uri | get | post | put | delete 
+|:---|:--- |:---  |:--- | :---  
+|restaurants|get | post | put | delete     
+|restaurants/id |get | post | put | delete
+|restaurants/id/dishes|get | post | put | delete
+|restaurants/id/dishes/id|get | post | put | delete
+|resraurants/id/vote|get | post | put | delete
+|restaurants/id/|get | post | put | delete
+
+
+
+ 
