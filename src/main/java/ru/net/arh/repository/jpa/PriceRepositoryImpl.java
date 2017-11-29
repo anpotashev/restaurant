@@ -11,6 +11,10 @@ import ru.net.arh.repository.AbstractBasedRepository;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
+
+import static ru.net.arh.model.Price.PRICE_FIND_ALL_ON_DAY;
+import static ru.net.arh.model.Price.PRICE_FIND_ALL_ON_DAY_IN_RESTAURANT;
 
 @Slf4j
 @Repository
@@ -55,5 +59,18 @@ public class PriceRepositoryImpl extends AbstractBasedRepository<Price, PriceId>
     @Transactional
     public Price create(int restaurant_id, int dish_id, LocalDate date, double price) {
         return this.create(restaurant_id, dish_id, date, price);
+    }
+
+    public List<Price> getPricesOnTheDayInRestaurant(int restaurant_id, LocalDate date) {
+        return em.createNamedQuery(PRICE_FIND_ALL_ON_DAY_IN_RESTAURANT)
+                .setParameter("restaurant_id", restaurant_id)
+                .setParameter("date", date)
+                .getResultList();
+    }
+
+    public List<Price> getPricesOnTheDay(LocalDate date) {
+        return em.createNamedQuery(PRICE_FIND_ALL_ON_DAY)
+                .setParameter("date", date)
+                .getResultList();
     }
 }

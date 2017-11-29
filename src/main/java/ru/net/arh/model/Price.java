@@ -23,31 +23,18 @@ import java.time.LocalDate;
         uniqueConstraints = {@UniqueConstraint(columnNames = {"restaurant_id", "dish_id", "start_date"}, name = "price_unique_restaurant_dish_date_idx")})
 
 @NamedQueries({
-        @NamedQuery(name = "PRICE.delete", query = "delete from Price p where p.priceKey.dish.id = :dish_id and p.priceKey.restaurant.id = :restaurant_id and p.priceKey.startDate = :startDate")
+        @NamedQuery(name = "PRICE.delete", query = "delete from Price p where p.key.dish.id = :dish_id and p.key.restaurant.id = :restaurant_id and p.key.startDate = :startDate")
+        , @NamedQuery(name = "PRICE.findAllOnDay", query = "select p from Price p where p.key.startDate = :startDate")
+        , @NamedQuery(name = "PRICE.findAllOnDayInRestaurant", query = "select p from Price p where p.key.restaurant.id = :restaurant_id and p.key.startDate = :startDate")
 })
 public class Price implements PrimaryKeyGettable<PriceId> {
-    public static final String DELETE = "PRICE.delete";
+    public static final String PRICE_DELETE = "PRICE.delete";
+    public static final String PRICE_FIND_ALL_ON_DAY = "PRICE.findAllOnDay";
+    public static final String PRICE_FIND_ALL_ON_DAY_IN_RESTAURANT = "PRICE.findAllOnDayInRestaurant";
+
     @EmbeddedId
-    private PriceId priceKey;
+    private PriceId key;
 
-
-//    @NotNull
-//    @ManyToOne
-//    @JoinColumn(name = "restaurant_id")
-//    @Id
-//    private Restaurant restaurant;
-//
-//    @NotNull
-//    @ManyToOne
-//    @JoinColumn(name = "dish_id")
-//    @Id
-//    private Dish dish;
-//
-//    @Column(name = "start_date")
-//    @NotNull
-//    @NotBlank
-//    @Id
-//    private LocalDate startDate;
 
     @Column(name = "price")
     @NotNull
@@ -56,22 +43,22 @@ public class Price implements PrimaryKeyGettable<PriceId> {
     private BigDecimal price;
 
     public Price(Restaurant restaurant, Dish dish, LocalDate date, BigDecimal price) {
-        priceKey = new PriceId(restaurant, dish, date);
+        key = new PriceId(restaurant, dish, date);
         this.price = price;
     }
 
     @Override
     public String toString() {
         return "Price{" +
-                "restaurant=" + priceKey.getRestaurant() +
-                ", dish=" + priceKey.getDish() +
-                ", startDate=" + priceKey.getStartDate() +
+                "restaurant=" + key.getRestaurant() +
+                ", dish=" + key.getDish() +
+                ", startDate=" + key.getStartDate() +
                 ", price=" + price +
                 '}';
     }
 
-    @Override
-    public PriceId getKey() {
-        return priceKey;
-    }
+//    @Override
+//    public PriceId getKey() {
+//        return key;
+//    }
 }

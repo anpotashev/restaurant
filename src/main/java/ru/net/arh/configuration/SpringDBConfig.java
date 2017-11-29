@@ -49,7 +49,7 @@ public class SpringDBConfig {
         LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         localContainerEntityManagerFactoryBean.setDataSource(dataSource());
         localContainerEntityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-        localContainerEntityManagerFactoryBean.setPackagesToScan(new String[] {"ru.net.arh.**.model"});
+        localContainerEntityManagerFactoryBean.setPackagesToScan(new String[]{"ru.net.arh.**.model"});
         localContainerEntityManagerFactoryBean.setJpaProperties(jpaProperties());
         return localContainerEntityManagerFactoryBean;
     }

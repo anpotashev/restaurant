@@ -16,15 +16,19 @@ public class PriceService {
     @Autowired
     private PriceRepositoryImpl repository;
 
-    public Price create(Price price) {
-        return repository.create(price);
+    public Price create(int restaurant_id, int dish_id, LocalDate date, double price) {
+        return repository.create(restaurant_id, dish_id, date, price);
     }
 
     public void delete(int restaurant_id, int dish_id, LocalDate date) {
         repository.delete(restaurant_id, dish_id, date);
     }
 
-    public List<Price> getPricesOnTheDay(int restaurant_id, LocalDate date) {
-        return null;
+    public List<Price> getPricesOnTheDayInRestaurant(int restaurant_id, LocalDate date) {
+        return repository.getPricesOnTheDayInRestaurant(restaurant_id, date);
+    }
+
+    public List<Price> getPricesOnTheDay(LocalDate date) {
+        return repository.getPricesOnTheDay(date);
     }
 }

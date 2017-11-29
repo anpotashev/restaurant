@@ -12,5 +12,6 @@ public interface AbstractBaseService<T extends AbstractBaseEntity> {
     T create(T value);
 
     void delete(int id);
+
     List<T> getAll();
 }

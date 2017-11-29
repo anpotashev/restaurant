@@ -22,7 +22,9 @@ INSERT INTO restaurant (name) VALUES
 INSERT INTO users (name, email, password) VALUES
   ('User', 'user@yandex.ru', 'password'),
   ('Admin', 'admin@gmail.com', 'admin'),
-  ('UserAdmin', 'useradmin@hotmail.com', 'useradmin_pwd');
+  ('UserAdmin', 'useradmin@hotmail.com', 'useradmin_pwd'),
+  ('User2', 'user2@yandex.ru', 'password2'),
+  ('User3', 'user3@yandex.ru', 'password3');
 
 INSERT INTO user_roles (role, user_id) VALUES
   ('ROLE_USER', 100008),
@@ -44,3 +46,11 @@ INSERT INTO price (restaurant_id, dish_id, start_date, price) VALUES
   (100006, 100000, '2017-11-10', 12.00),
   (100006, 100001, '2017-11-10', 14.00),
   (100006, 100003, '2017-11-10', 16.00);
+
+INSERT INTO vote (date, user_id, restaurant_id) VALUES
+  ('today', 100008, 100004),
+  ('today', 100010, 100005);
+
+INSERT INTO vote (date, user_id, restaurant_id) VALUES
+  ('yesterday', 100008, 100004),
+  ('yesterday', 100010, 100005);

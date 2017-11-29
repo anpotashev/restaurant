@@ -15,6 +15,7 @@ public abstract class NamedBasedRepository<T extends NamedBasedEntity> extends A
     protected abstract String findByNameNamedQuery();
 
     public List<T> findByNameIgnoreCase(String name) {
+
         return super.em.createNamedQuery(findByNameNamedQueryIgnoreCase()).setParameter("name", name).getResultList();
     }
 

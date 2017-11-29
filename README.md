@@ -48,9 +48,15 @@ REST:
 |uri | get | post | put | delete 
 |:---|:--- |:---  |:--- | :---  
 | restaurants| list all | - | new | -
-| restaurants/id | list | edit | - | delete
-| restaurants/id/dishes | list all | - | new | 
-| restaurants/id/dishes/id | list | edit | - | delete
+| restaurants/{r_id}/votes| list all | - | (re)vote | -
+| restaurants/{r_id}/votes/{date}| list all | - | - | -
+| restaurants/{r_id} | list | edit | - | delete
+| restaurants/{r_id}/prices/{date} | - | - | - |
+| restaurants/{r_id}/prices/{date} | - | - | - | 
+| restaurants/{r_id}/prices/{date}/dishes/{d_id}} | list | edit | new | delete
+| dishes | list all | - | new | -
+| dishes/{d_id} | list | edit | - | delete
+
 
 
 

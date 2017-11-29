@@ -1,4 +1,4 @@
-package ru.net.arh.service.dish;
+package ru.net.arh.service.restaurant;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -11,23 +11,22 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.net.arh.configuration.SpringConfig;
-import ru.net.arh.model.Dish;
-import ru.net.arh.testdata.DishTestData;
-import ru.net.arh.testdata.GenericTestClass;
+import ru.net.arh.model.Restaurant;
+import ru.net.arh.testdata.RestaurantTestData;
 import ru.net.arh.utils.exception.NotFoundException;
 
 import java.util.List;
 
 import static ru.net.arh.model.AbstractBaseEntity.START_SEQ;
-import static ru.net.arh.testdata.DishTestData.DISH4_UPDATED;
-import static ru.net.arh.testdata.DishTestData.NEW_DISH;
 import static ru.net.arh.testdata.GenericTestClass.assertMatch;
+import static ru.net.arh.testdata.RestaurantTestData.NEW_RESTAURANT;
+import static ru.net.arh.testdata.RestaurantTestData.RESTAURANT_UPDATED;
 import static ru.net.arh.testdata.TestDBData.*;
 
 @ContextConfiguration(classes = SpringConfig.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 @Sql(scripts = "classpath:db/populateDb.sql")
-public class DishServiceTest {
+public class RestaurantServiceTest {
 
     static {
         SLF4JBridgeHandler.install();
@@ -35,8 +34,9 @@ public class DishServiceTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
     @Autowired
-    private DishService service;
+    private RestaurantService service;
 
     @Before
     public void setUp() throws Exception {
@@ -44,8 +44,8 @@ public class DishServiceTest {
 
     @Test
     public void get() throws Exception {
-        Dish dish = service.get(START_SEQ);
-        assertMatch(dish, DISH1);
+        Restaurant restaurant = service.get(START_RESTAURANT_ID);
+        assertMatch(restaurant, RESTAURANT1);
     }
 
     @Test
@@ -56,47 +56,47 @@ public class DishServiceTest {
 
     @Test
     public void create() throws Exception {
-        service.create(DishTestData.newDish());
+        service.create(RestaurantTestData.newRestaurant());
         List actual = service.getAll();
-        GenericTestClass.assertMatch(actual, DISH1, DISH2, DISH3, DISH4, NEW_DISH);
+        assertMatch(actual, RESTAURANT1, RESTAURANT2, RESTAURANT3, RESTAURANT4, NEW_RESTAURANT);
     }
 
     @Test
     public void createWithEmptyName() throws Exception {
-        Dish dish = DishTestData.newDish();
-        dish.setName("");
-        service.create(dish);
+        Restaurant restaurant = RestaurantTestData.newRestaurant();
+        restaurant.setName("");
+        service.create(restaurant);
     }
 
     @Test
     public void update() throws Exception {
-        Dish dish = new Dish(DISH4_UPDATED.getId(), DISH4_UPDATED.getName());
-        service.update(dish);
+        Restaurant restaurant = new Restaurant(RESTAURANT_UPDATED.getId(), RESTAURANT_UPDATED.getName());
+        service.update(restaurant);
         List actual = service.getAll();
-        assertMatch(actual, DISH1, DISH2, DISH3, DISH4_UPDATED);
+        assertMatch(actual, RESTAURANT_UPDATED, RESTAURANT2, RESTAURANT3, RESTAURANT4);
 //        throw new RuntimeException("not implemented yet");
     }
 
     @Test
     public void updateWithWrongId() throws Exception {
-        Dish dish = new Dish(-1, "dish with wrong id");
+        Restaurant restaurant = new Restaurant(-1, "restaurant with wrong id");
         thrown.expect(NotFoundException.class);
-        service.update(dish);
+        service.update(restaurant);
     }
 
     @Test
     public void updateWithEmptyName() throws Exception {
-        Dish dish = service.get(START_SEQ);
-        dish.setName("");
-        service.update(dish);
+        Restaurant restaurant = service.get(START_SEQ);
+        restaurant.setName("");
+        service.update(restaurant);
         throw new RuntimeException("not working validation yet");
     }
 
     @Test
     public void delete() throws Exception {
-        service.delete(START_SEQ);
+        service.delete(START_RESTAURANT_ID);
         List actual = service.getAll();
-        assertMatch(actual, DISH2, DISH3, DISH4);
+        assertMatch(actual, RESTAURANT2, RESTAURANT3, RESTAURANT4);
     }
 
     @Test
@@ -108,18 +108,18 @@ public class DishServiceTest {
     @Test
     public void getAll() throws Exception {
         List actual = service.getAll();
-        assertMatch(actual, DISH1, DISH2, DISH3, DISH4);
+        assertMatch(actual, RESTAURANT1, RESTAURANT2, RESTAURANT3, RESTAURANT4);
     }
 
     @Test
     public void findStaringWithName() throws Exception {
-        List actual = service.findStaringWithName("блюдо");
-        assertMatch(actual, DISH1, DISH2, DISH3);
+        List actual = service.findStaringWithName("Ресторан");
+        assertMatch(actual, RESTAURANT1, RESTAURANT2, RESTAURANT3);
     }
 
     @Test
     public void findStaringWithNameIgnoreCase() throws Exception {
-        List actual = service.findStaringWithNameIgnoreCase("блюдо");
-        assertMatch(actual, DISH1, DISH2, DISH3, DISH4);
+        List actual = service.findStaringWithNameIgnoreCase("ресторан");
+        assertMatch(actual, RESTAURANT1, RESTAURANT2, RESTAURANT3, RESTAURANT4);
     }
 }

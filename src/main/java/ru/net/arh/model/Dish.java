@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @NamedQueries({
         @NamedQuery(name = "DISH.findByNameIgnoreCase", query = "select d from Dish d where lower(d.name) like concat(lower(:name), '%' ) ")
         , @NamedQuery(name = "DISH.findByName", query = "select d from Dish d where d.name like concat(:name, '%' ) ")
-        , @NamedQuery(name = "DISH.findAll", query = "select d from Dish d")
+        , @NamedQuery(name = "DISH.findAll", query = "select d from Dish d order by d.id")
 })
 public class Dish extends NamedBasedEntity {
     public static final String FIND_BY_NAME_IGNORE_CASE = "DISH.findByNameIgnoreCase";

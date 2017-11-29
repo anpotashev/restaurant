@@ -21,6 +21,7 @@
     </appender>
 
     <logger name="ru.net.arh" level="debug"/>
+    <!--<logger name="org.hibernate.type" level="TRACE" />-->
 
     <root level="info">
         <!--<appender-ref ref="file"/>-->

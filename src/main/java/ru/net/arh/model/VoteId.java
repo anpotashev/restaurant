@@ -18,7 +18,7 @@ import java.time.LocalDate;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-class VoteId implements Serializable {
+public class VoteId implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @OnDelete(action = OnDeleteAction.CASCADE)

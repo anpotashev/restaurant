@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @NamedQueries({
         @NamedQuery(name = "RESTAURANT.findByNameIgnoreCase", query = "select r from Restaurant r where lower(r.name) like concat(lower(:name), '%' ) ")
         , @NamedQuery(name = "RESTAURANT.findByName", query = "select r from Restaurant r where r.name like concat(:name, '%' ) ")
-        , @NamedQuery(name = "RESTAURANT.findAll", query = "select r from Restaurant r")
+        , @NamedQuery(name = "RESTAURANT.findAll", query = "select r from Restaurant r order by r.id")
 })
 public class Restaurant extends NamedBasedEntity {
 
@@ -27,4 +27,7 @@ public class Restaurant extends NamedBasedEntity {
         super(id, name);
     }
 
+    public Restaurant(String name) {
+        super(name);
+    }
 }

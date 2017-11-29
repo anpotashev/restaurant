@@ -7,7 +7,6 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
@@ -16,23 +15,19 @@ import java.time.LocalDate;
 @Setter
 @EqualsAndHashCode
 @NoArgsConstructor
-//@Entity
-@IdClass(VoteId.class)
+@Entity
+//@IdClass(VoteId.class)
 @Table(name = "vote",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "date"}, name = "vote_unique_user_date_idx")})
-public class Vote {
+@NamedQueries({
+        @NamedQuery(name = "VOTE.findAllByDate", query = "select v from Vote v where v.key.date=:date order by v.restaurant.id, v.key.user.id")
+})
+public class Vote implements PrimaryKeyGettable<VoteId> {
 
-    @ManyToOne
-    @NotNull
-    @JoinColumn(name = "user_id")
-    @Id
-    private User user;
+    public static final String VOTE_FIND_ALL_BY_DATE = "VOTE.findAllByDate";
 
-    @Column(name = "date")
-    @NotNull
-    @NotBlank
-    @Id
-    private LocalDate date;
+    @EmbeddedId
+    private VoteId key;
 
     @ManyToOne
     @NotNull
@@ -40,17 +35,21 @@ public class Vote {
     Restaurant restaurant;
 
     public Vote(User user, LocalDate date, Restaurant restaurant) {
-        this.user = user;
-        this.date = date;
+        key = new VoteId(user, date);
         this.restaurant = restaurant;
     }
 
     @Override
     public String toString() {
         return "Vote{" +
-                "user=" + user +
-                ", date=" + date +
+                "user=" + key.getUser() +
+                ", date=" + key.getDate() +
                 ", restaurant=" + restaurant +
                 '}';
     }
+
+//    @Override
+//    public VoteId getKey() {
+//        return key;
+//    }
 }
