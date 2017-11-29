@@ -4,11 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import ru.net.arh.configuration.SpringConfig;
-import ru.net.arh.configuration.SpringDBConfig;
-import ru.net.arh.configuration.SpringTestConfig;
-import ru.net.arh.model.*;
+import ru.net.arh.service.price.PriceService;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Slf4j
@@ -16,6 +13,11 @@ public class Main {
 
     public static void main(String[] args) {
         ApplicationContext ctx = new AnnotationConfigApplicationContext(SpringConfig.class);
+        PriceService ps = ctx.getBean(PriceService.class);
+        ps.delete(100005, 100000, LocalDate.of(2017, 11, 9));
+//        DishRepository repository = ctx.getBean(DishRepository.class);
+//        System.out.println(repository.findOne(1));
+
 //        ApplicationContext ctx = new AnnotationConfigApplicationContext(SpringDBConfig.class);
 //
 //        Dish dish = ctx.getBean(Dish.class);

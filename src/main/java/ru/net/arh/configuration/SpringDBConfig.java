@@ -1,8 +1,6 @@
 package ru.net.arh.configuration;
 
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.cfg.AvailableSettings;
-import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,19 +8,21 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-
 import java.util.Properties;
+
+import static org.hibernate.cfg.AvailableSettings.*;
 
 @Slf4j
 @Configuration
 @PropertySource("classpath:db/db.properties")
 @EnableTransactionManagement
+//@EnableJpaRepositories(basePackages = {"ru.net.arh.repository.jpa"})
 public class SpringDBConfig {
     @Autowired
     Environment env;
@@ -38,32 +38,37 @@ public class SpringDBConfig {
     }
 
     @Bean
-    public JpaTransactionManager jpaTransactionManager(EntityManagerFactory emf) {
+    public JpaTransactionManager transactionManager(EntityManagerFactory emf) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(emf);
         return transactionManager;
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean() {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         localContainerEntityManagerFactoryBean.setDataSource(dataSource());
         localContainerEntityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         localContainerEntityManagerFactoryBean.setPackagesToScan(new String[] {"ru.net.arh.**.model"});
-
-        Properties jpaProperties = new Properties();
-        jpaProperties.setProperty(AvailableSettings.DIALECT,"org.hibernate.dialect.PostgreSQL9Dialect");
-        jpaProperties.setProperty(AvailableSettings.MAX_FETCH_DEPTH, "3");
-        jpaProperties.setProperty(AvailableSettings.STATEMENT_FETCH_SIZE, "50");
-        jpaProperties.setProperty(AvailableSettings.STATEMENT_BATCH_SIZE, "10");
-        jpaProperties.setProperty(AvailableSettings.SHOW_SQL, "true");
-        jpaProperties.setProperty(AvailableSettings.FORMAT_SQL, "true");
-        jpaProperties.setProperty(AvailableSettings.USE_SQL_COMMENTS, "true");
-        jpaProperties.setProperty(AvailableSettings.HBM2DDL_AUTO, "update");
-        localContainerEntityManagerFactoryBean.setJpaProperties(jpaProperties);
-
+        localContainerEntityManagerFactoryBean.setJpaProperties(jpaProperties());
         return localContainerEntityManagerFactoryBean;
     }
 
+    private Properties jpaProperties() {
+        Properties jpaProperties = new Properties();
+        jpaProperties.setProperty(DIALECT, env.getProperty("DIALECT"));
+        jpaProperties.setProperty(MAX_FETCH_DEPTH, env.getProperty("MAX_FETCH_DEPTH"));
+        jpaProperties.setProperty(STATEMENT_FETCH_SIZE, env.getProperty("STATEMENT_FETCH_SIZE"));
+        jpaProperties.setProperty(STATEMENT_BATCH_SIZE, env.getProperty("STATEMENT_BATCH_SIZE"));
+        jpaProperties.setProperty(SHOW_SQL, env.getProperty("SHOW_SQL"));
+        jpaProperties.setProperty(FORMAT_SQL, env.getProperty("FORMAT_SQL"));
+        jpaProperties.setProperty(USE_SQL_COMMENTS, env.getProperty("USE_SQL_COMMENTS"));
+//        jpaProperties.setProperty(HBM2DDL_AUTO,env.getProperty("HBM2DDL_AUTO"));
+//        jpaProperties.setProperty(HBM2DDL_DATABASE_ACTION,"drop-and-create");
+//        jpaProperties.setProperty(HBM2DDL_SCRIPTS_CREATE_TARGET,"create.sql");
+//        jpaProperties.setProperty(HBM2DDL_SCRIPTS_DROP_TARGET,"drop.sql");
+//        jpaProperties.setProperty(HBM2DDL_SCRIPTS_ACTION,"drop-and-create");
+        return jpaProperties;
+    }
 
 }

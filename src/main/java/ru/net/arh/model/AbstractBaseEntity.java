@@ -15,18 +15,25 @@ import javax.persistence.*;
 //persitence
 @MappedSuperclass
 @Access(AccessType.FIELD)
-public class AbstractBaseEntity {
+public class AbstractBaseEntity implements PrimaryKeyGettable<Integer> {
+    public static final int START_SEQ = 100000;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = START_SEQ)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
     protected Integer id;
 
-    public boolean isNew() {
-        return this.id == null;
-    }
+//    public boolean isNew() {
+//        return this.id == null;
+//    }
 
     @Override
     public String toString() {
         return this.getClass().getSimpleName() + " [id: " + id + "]";
+    }
+
+    @Override
+    public Integer getKey() {
+        return id;
     }
 }

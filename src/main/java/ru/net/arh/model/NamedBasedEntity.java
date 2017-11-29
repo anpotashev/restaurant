@@ -11,6 +11,7 @@ import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 //lombok
@@ -23,6 +24,7 @@ import javax.validation.constraints.Size;
 @Access(AccessType.FIELD)
 public class NamedBasedEntity extends AbstractBaseEntity {
 
+    @NotNull
     @NotBlank
     @Size(min = 2, max = 100)
     @Column(name = "name")
@@ -30,6 +32,10 @@ public class NamedBasedEntity extends AbstractBaseEntity {
 
     public NamedBasedEntity(Integer id, String name) {
         super(id);
+        this.name = name;
+    }
+
+    public NamedBasedEntity(String name) {
         this.name = name;
     }
 

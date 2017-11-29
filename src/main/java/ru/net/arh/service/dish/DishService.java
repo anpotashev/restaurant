@@ -4,30 +4,50 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.net.arh.model.Dish;
-import ru.net.arh.repository.DishRepository;
-import ru.net.arh.service.AbstractBaseService;
-
-import java.time.LocalDate;
-import java.util.List;
+import ru.net.arh.repository.NamedBasedRepository;
+import ru.net.arh.repository.jpa.DishRepositoryImpl;
+import ru.net.arh.service.AbstractNamedService;
 
 @Slf4j
 @Service
-public class DishService implements AbstractBaseService<Dish> {
+public class DishService extends AbstractNamedService<Dish> {
     @Autowired
-    private DishRepository dishRepository;
+    private DishRepositoryImpl repository;
 
-    public Dish get(int id) {
-        return null;
+    @Override
+    protected NamedBasedRepository<Dish> getRepository() {
+        return repository;
     }
 
-    public Dish save(Dish dish) {
-        return null;
-    }
-
-    public void delete(Dish dish) {
-    }
-
-    public List<Dish> getAll() {
-        return null;
-    }
+//    public Dish get(int id) {
+//        return ValidationUnit.checkNotFound(repository.find(id), id);
+//    }
+//
+//    public Dish create(Dish dish) {
+//        return repository.create(dish);
+//    }
+//
+//    public Dish update(Dish dish) {
+//        return ValidationUnit.checkNotFound(repository.update(dish), dish.getId());
+//    }
+//
+//    public void delete(int id) {
+//        try {
+//            repository.delete(id);
+//        } catch (EmptyResultDataAccessException e) {
+//            ValidationUnit.checkNotFound(null, id);
+//        }
+//    }
+//
+//    public List<Dish> getAll() {
+//        return repository.findAll();
+//    }
+//
+//    public List<Dish> findStaringWithName(String name) {
+//        return repository.findByName(name);
+//    }
+//
+//    public List<Dish> findStaringWithNameIgnoreCase(String name) {
+//        return repository.findByNameIgnoreCase(name);
+//    }
 }

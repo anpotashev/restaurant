@@ -7,7 +7,11 @@ import org.springframework.context.annotation.Import;
 
 @Slf4j
 @Configuration
-@ComponentScan({"ru.net.arh.**.repository.jpa", "ru.net.arh.**.service", "ru.net.arh.**.web"})
+@ComponentScan({
+        "ru.net.arh.**.service"
+        , "ru.net.arh.**.web"
+        , "ru.net.arh.**.jpa"
+})
 @Import(SpringDBConfig.class)
 public class SpringConfig {
 

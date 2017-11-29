@@ -1,4 +1,4 @@
-package ru.net.arh.web.dish;
+package ru.net.arh.web.restaurant;
 
 import lombok.extern.slf4j.Slf4j;
 import ru.net.arh.model.Dish;
@@ -10,7 +10,7 @@ import java.util.List;
 
 @Slf4j
 //@Controller
-public class DishRestController extends AbstractBaseRestController<Dish> {
+public class RestaurantRestController extends AbstractBaseRestController<Dish> {
     //    @Autowired
     private DishService dishService;
 

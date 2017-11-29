@@ -18,11 +18,11 @@ public abstract class AbstractBaseRestController<T extends AbstractBaseEntity> {
     }
 
     public T save(T value) {
-        return getBaseService().save(value);
+        return getBaseService().update(value);
     }
 
-    public void delete(T value) {
-        getBaseService().delete(value);
+    public void delete(int id) {
+        getBaseService().delete(id);
     }
 
 }

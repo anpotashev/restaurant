@@ -2,6 +2,7 @@ package ru.net.arh.model;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,7 +15,8 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @EqualsAndHashCode
-@Entity
+@NoArgsConstructor
+//@Entity
 @IdClass(VoteId.class)
 @Table(name = "vote",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "date"}, name = "vote_unique_user_date_idx")})

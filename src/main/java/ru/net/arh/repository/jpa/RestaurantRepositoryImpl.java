@@ -2,30 +2,30 @@ package ru.net.arh.repository.jpa;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
-import ru.net.arh.model.Dish;
+import ru.net.arh.model.Restaurant;
 import ru.net.arh.repository.NamedBasedRepository;
 
 @Slf4j
 @Repository
-public class DishRepositoryImpl extends NamedBasedRepository<Dish> {
+public class RestaurantRepositoryImpl extends NamedBasedRepository<Restaurant> {
 
     @Override
-    public Class<Dish> getClazz() {
-        return Dish.class;
+    public Class<Restaurant> getClazz() {
+        return Restaurant.class;
     }
 
     @Override
     public String findAllNamedQuery() {
-        return Dish.FIND_ALL;
+        return Restaurant.FIND_ALL;
     }
 
     @Override
     protected String findByNameNamedQueryIgnoreCase() {
-        return Dish.FIND_BY_NAME_IGNORE_CASE;
+        return Restaurant.FIND_BY_NAME_IGNORE_CASE;
     }
 
     @Override
     protected String findByNameNamedQuery() {
-        return Dish.FIND_BY_NAME;
+        return Restaurant.FIND_BY_NAME;
     }
 }
