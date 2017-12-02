@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Import;
         , "ru.net.arh.**.web"
         , "ru.net.arh.**.jpa"
 })
-@Import(SpringDBConfig.class)
+@Import({SpringDBConfig.class, SpringCacheConfig.class})
 public class SpringConfig {
 
 }

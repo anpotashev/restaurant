@@ -48,7 +48,9 @@ public class SpringDBConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         localContainerEntityManagerFactoryBean.setDataSource(dataSource());
-        localContainerEntityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+        HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
+        jpaVendorAdapter.setShowSql(true);
+        localContainerEntityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter);
         localContainerEntityManagerFactoryBean.setPackagesToScan(new String[]{"ru.net.arh.**.model"});
         localContainerEntityManagerFactoryBean.setJpaProperties(jpaProperties());
         return localContainerEntityManagerFactoryBean;
@@ -63,11 +65,6 @@ public class SpringDBConfig {
         jpaProperties.setProperty(SHOW_SQL, env.getProperty("SHOW_SQL"));
         jpaProperties.setProperty(FORMAT_SQL, env.getProperty("FORMAT_SQL"));
         jpaProperties.setProperty(USE_SQL_COMMENTS, env.getProperty("USE_SQL_COMMENTS"));
-//        jpaProperties.setProperty(HBM2DDL_AUTO,env.getProperty("HBM2DDL_AUTO"));
-//        jpaProperties.setProperty(HBM2DDL_DATABASE_ACTION,"drop-and-create");
-//        jpaProperties.setProperty(HBM2DDL_SCRIPTS_CREATE_TARGET,"create.sql");
-//        jpaProperties.setProperty(HBM2DDL_SCRIPTS_DROP_TARGET,"drop.sql");
-//        jpaProperties.setProperty(HBM2DDL_SCRIPTS_ACTION,"drop-and-create");
         return jpaProperties;
     }
 

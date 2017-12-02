@@ -11,35 +11,16 @@ import java.time.LocalDate;
 @Slf4j
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         ApplicationContext ctx = new AnnotationConfigApplicationContext(SpringConfig.class);
-        PriceService ps = ctx.getBean(PriceService.class);
-        ps.delete(100005, 100000, LocalDate.of(2017, 11, 9));
-//        DishRepository repository = ctx.getBean(DishRepository.class);
-//        System.out.println(repository.findOne(1));
 
-//        ApplicationContext ctx = new AnnotationConfigApplicationContext(SpringDBConfig.class);
-//
-//        Dish dish = ctx.getBean(Dish.class);
-//        Dish dish2 = ctx.getBean(Dish.class);
-//        print(dish, dish2);
-//
-//        Restaurant restaurant = new Restaurant(1, "Restaraunt");
-//        Restaurant restaurant2 = new Restaurant(1, "Restaraunt2");
-//        print(restaurant, restaurant2);
-//
-//        Price price = new Price(restaurant, dish, LocalDate.now(), new BigDecimal(10.0) );
-//        Price price2 = new Price(restaurant, dish, LocalDate.now(), new BigDecimal(10.0) );
-//        print(price, price2);
-//
-//        User user = new User(1, "name", "email", "password", Role.ROLE_ADMIN, Role.ROLE_USER);
-//        User user2 = new User(1, "name", "email", "password", Role.ROLE_ADMIN);
-//        print(user, user2);
-//
-//        Vote vote = new Vote(user, LocalDate.now(), restaurant);
-//        Vote vote2 = new Vote(user, LocalDate.now(), restaurant);
-//        print(vote, vote2);
-
+        PriceService priceService = ctx.getBean(PriceService.class);
+        System.out.println("_________________SHOW");
+        System.out.println(priceService.getDayMenu(LocalDate.now()));
+        System.out.println("_________________SHOW");
+        System.out.println(priceService.getDayMenu(LocalDate.now().minusDays(1)));
+        System.out.println("_________________SHOW");
+        System.out.println(priceService.getDayMenu(LocalDate.now()));
     }
 
     private static void print(Object object1, Object object2) {

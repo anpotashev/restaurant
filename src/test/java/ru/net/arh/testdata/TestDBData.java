@@ -40,20 +40,22 @@ public class TestDBData {
     public static final User USER3 = new User(START_SEQ + DISH_COUNT + RESTAURANT_COUNT + 4, "User3", "user3@yandex.ru", "password3", Role.ROLE_USER);
     public static final Vote VOTE1 = new Vote(USER, LocalDate.now(), RESTAURANT1);
 
+    private static final int USER_COUNT = 5;
+
     public static final int NEXT_ID = START_SEQ + DISH_COUNT + RESTAURANT_COUNT + USER_COUNT;
 
     static {
-        createPrice(RESTAURANT1, DISH1, LocalDate.of(2017, 11, 9), 11.00);
-        createPrice(RESTAURANT1, DISH2, LocalDate.of(2017, 11, 9), 11.00);
-        createPrice(RESTAURANT1, DISH3, LocalDate.of(2017, 11, 9), 12.00);
-        createPrice(RESTAURANT1, DISH2, LocalDate.of(2017, 11, 10), 10.11);
-        createPrice(RESTAURANT1, DISH3, LocalDate.of(2017, 11, 10), 10.12);
-        createPrice(RESTAURANT1, DISH4, LocalDate.of(2017, 11, 10), 10.13);
-        createPrice(RESTAURANT2, DISH1, LocalDate.of(2017, 11, 9), 10.00);
-        createPrice(RESTAURANT2, DISH4, LocalDate.of(2017, 11, 9), 11.00);
-        createPrice(RESTAURANT2, DISH1, LocalDate.of(2017, 11, 10), 12.00);
-        createPrice(RESTAURANT2, DISH2, LocalDate.of(2017, 11, 10), 14.00);
-        createPrice(RESTAURANT2, DISH4, LocalDate.of(2017, 11, 10), 16.00);
+        createPrice(RESTAURANT1, DISH1, LocalDate.now().minusDays(1), 11.00);
+        createPrice(RESTAURANT1, DISH2, LocalDate.now().minusDays(1), 11.00);
+        createPrice(RESTAURANT1, DISH3, LocalDate.now().minusDays(1), 12.00);
+        createPrice(RESTAURANT1, DISH2, LocalDate.now(), 10.11);
+        createPrice(RESTAURANT1, DISH3, LocalDate.now(), 10.12);
+        createPrice(RESTAURANT1, DISH4, LocalDate.now(), 10.13);
+        createPrice(RESTAURANT2, DISH1, LocalDate.now().minusDays(1), 10.00);
+        createPrice(RESTAURANT2, DISH4, LocalDate.now().minusDays(1), 11.00);
+        createPrice(RESTAURANT2, DISH1, LocalDate.now(), 12.00);
+        createPrice(RESTAURANT2, DISH2, LocalDate.now(), 14.00);
+        createPrice(RESTAURANT2, DISH4, LocalDate.now(), 16.00);
     }
 
     private static void createPrice(Restaurant restaurant, Dish dish, LocalDate date, double price) {
@@ -64,5 +66,5 @@ public class TestDBData {
     public static final Vote VOTE2 = new Vote(USER_ADMIN, LocalDate.now(), RESTAURANT2);
     public static final Vote VOTE1_YESTERDAY = new Vote(USER, LocalDate.now().minusDays(1), RESTAURANT1);
     public static final Vote VOTE2_YESTERDAY = new Vote(USER_ADMIN, LocalDate.now().minusDays(1), RESTAURANT2);
-    private static final int USER_COUNT = 5;
+
 }

@@ -13,8 +13,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-import static ru.net.arh.model.Price.PRICE_FIND_ALL_ON_DAY;
-import static ru.net.arh.model.Price.PRICE_FIND_ALL_ON_DAY_IN_RESTAURANT;
+import static ru.net.arh.model.Price.*;
 
 @Slf4j
 @Repository
@@ -70,6 +69,12 @@ public class PriceRepositoryImpl extends AbstractBasedRepository<Price, PriceId>
 
     public List<Price> getPricesOnTheDay(LocalDate date) {
         return em.createNamedQuery(PRICE_FIND_ALL_ON_DAY)
+                .setParameter("date", date)
+                .getResultList();
+    }
+
+    public List<Price> getPricesOnTheDayWithFields(LocalDate date) {
+        return em.createNamedQuery(PRICE_FIND_ALL_ON_DAY_WITH_FIELD)
                 .setParameter("date", date)
                 .getResultList();
     }

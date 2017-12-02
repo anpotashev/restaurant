@@ -27,6 +27,7 @@ public abstract class AbstractBasedRepository<T extends PrimaryKeyGettable<K>, K
     @Transactional
     public T create(final T value) {
         em.persist(value);
+        em.flush();
         return value;
     }
 

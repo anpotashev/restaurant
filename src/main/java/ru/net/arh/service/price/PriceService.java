@@ -2,9 +2,12 @@ package ru.net.arh.service.price;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ru.net.arh.model.Price;
 import ru.net.arh.repository.jpa.PriceRepositoryImpl;
+import ru.net.arh.to.DayMenu;
+import ru.net.arh.utils.MenuUtil;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -28,7 +31,21 @@ public class PriceService {
         return repository.getPricesOnTheDayInRestaurant(restaurant_id, date);
     }
 
-    public List<Price> getPricesOnTheDay(LocalDate date) {
+    public List<Price> getDayPrices(LocalDate date) {
         return repository.getPricesOnTheDay(date);
+    }
+
+    public List<Price> getDayPricesWithFields(LocalDate date) {
+        return repository.getPricesOnTheDayWithFields(date);
+    }
+
+    @Cacheable("menu")
+    public DayMenu getDayMenu(LocalDate date) {
+        return MenuUtil.convert(date, getDayPricesWithFields(date));
+    }
+
+    public DayMenu getDayMenu() {
+        LocalDate date = LocalDate.now();
+        return getDayMenu(date);
     }
 }

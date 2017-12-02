@@ -2,12 +2,10 @@ package ru.net.arh.web.price;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.net.arh.model.Price;
 import ru.net.arh.service.price.PriceService;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 
 @Slf4j
 //@Controller
@@ -28,12 +26,14 @@ public class PriceRestController {
         priceService.delete(restaurant_id, dish_id, date);
     }
 
-    public List<Price> getOnTheDay(int restaurant_id, LocalDate date) {
-        return priceService.getPricesOnTheDay(restaurant_id, date);
-    }
+//    public List<Price> getOnTheDay(int restaurant_id, LocalDate date) {
+//        return priceService.getDayPrices(restaurant_id, date);
+//    }
+//
+//    public List<Price> getOnToday(int restaurant_id) {
+//        return priceService.getDayPrices(restaurant_id, LocalDate.now());
+//    }
 
-    public List<Price> getOnToday(int restaurant_id) {
-        return priceService.getPricesOnTheDay(restaurant_id, LocalDate.now());
-    }
+
 
 }
