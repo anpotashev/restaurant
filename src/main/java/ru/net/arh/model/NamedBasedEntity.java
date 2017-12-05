@@ -30,8 +30,8 @@ public class NamedBasedEntity extends AbstractBaseEntity {
     @Column(name = "name")
     protected String name;
 
-    public NamedBasedEntity(Integer id, String name) {
-        super(id);
+    public NamedBasedEntity(Integer key, String name) {
+        super(key);
         this.name = name;
     }
 

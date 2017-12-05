@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public interface PrimaryKeyGettable<T extends Serializable> {
 
+    //Just for user, dish and restaurant
     default boolean isNew() {
         return getKey() != null;
     }

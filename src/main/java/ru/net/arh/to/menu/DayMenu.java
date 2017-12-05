@@ -1,4 +1,4 @@
-package ru.net.arh.to;
+package ru.net.arh.to.menu;
 
 import lombok.Getter;
 import ru.net.arh.model.Restaurant;
@@ -23,12 +23,12 @@ public class DayMenu {
         StringBuilder builder = new StringBuilder(date.toString());
         restarauntMenu.forEach((restaurant, restaurantMenuItems) -> {
             builder.append("\n")
-                    .append(restaurant.getId())
+                    .append(restaurant.getKey())
                     .append(" - ")
                     .append(restaurant.getName());
             restaurantMenuItems.forEach(restaurantMenuItem -> {
                 builder.append("\n")
-                        .append(restaurantMenuItem.getDish().getId())
+                        .append(restaurantMenuItem.getDish().getKey())
                         .append(" - ")
                         .append(restaurantMenuItem.getDish().getName())
                         .append(" - ")

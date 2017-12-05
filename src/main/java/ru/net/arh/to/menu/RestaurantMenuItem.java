@@ -1,4 +1,4 @@
-package ru.net.arh.to;
+package ru.net.arh.to.menu;
 
 import lombok.Getter;
 import lombok.ToString;

@@ -49,12 +49,12 @@ public class User extends NamedBasedEntity {
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-    public User(Integer id, String name, String email, String password, Role role, Role... roles) {
-        this(id, name, email, password, true, EnumSet.of(role, roles));
+    public User(Integer key, String name, String email, String password, Role role, Role... roles) {
+        this(key, name, email, password, true, EnumSet.of(role, roles));
     }
 
-    public User(Integer id, String name, String email, String password, boolean b, EnumSet<Role> roles) {
-        super(id, name);
+    public User(Integer key, String name, String email, String password, boolean b, EnumSet<Role> roles) {
+        super(key, name);
         this.email = email;
         this.password = password;
         this.enabled = enabled;

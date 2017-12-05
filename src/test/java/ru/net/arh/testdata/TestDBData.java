@@ -38,7 +38,7 @@ public class TestDBData {
     public static final User USER_ADMIN = new User(START_SEQ + DISH_COUNT + RESTAURANT_COUNT + 2, "UserAdmin", "useradmin@hotmail.com", "useradmin_pwd", Role.ROLE_ADMIN, Role.ROLE_USER);
     public static final User USER2 = new User(START_SEQ + DISH_COUNT + RESTAURANT_COUNT + 3, "User2", "user2@yandex.ru", "password2", Role.ROLE_USER);
     public static final User USER3 = new User(START_SEQ + DISH_COUNT + RESTAURANT_COUNT + 4, "User3", "user3@yandex.ru", "password3", Role.ROLE_USER);
-    public static final Vote VOTE1 = new Vote(USER, LocalDate.now(), RESTAURANT1);
+
 
     private static final int USER_COUNT = 5;
 
@@ -63,7 +63,9 @@ public class TestDBData {
         PRICES.computeIfAbsent(restaurant, k -> new LinkedList<>()).add(price1);
     }
 
+    public static final Vote VOTE1 = new Vote(USER, LocalDate.now(), RESTAURANT1);
     public static final Vote VOTE2 = new Vote(USER_ADMIN, LocalDate.now(), RESTAURANT2);
+    public static final Vote VOTE3 = new Vote(USER2, LocalDate.now(), RESTAURANT1);
     public static final Vote VOTE1_YESTERDAY = new Vote(USER, LocalDate.now().minusDays(1), RESTAURANT1);
     public static final Vote VOTE2_YESTERDAY = new Vote(USER_ADMIN, LocalDate.now().minusDays(1), RESTAURANT2);
 

@@ -20,20 +20,9 @@ import java.time.LocalDate;
 @Entity
 //@IdClass(PriceId.class)
 @Table(name = "price",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"restaurant_id", "dish_id", "start_date"}, name = "price_unique_restaurant_dish_date_idx")})
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"restaurant_id", "dish_id", "date"}, name = "price_unique_restaurant_dish_date_idx")})
 
-@NamedQueries({
-        @NamedQuery(name = Price.PRICE_DELETE, query = "delete from Price p where p.key.dish.id = :dish_id and p.key.restaurant.id = :restaurant_id and p.key.startDate = :startDate")
-        , @NamedQuery(name = Price.PRICE_FIND_ALL_ON_DAY, query = "select p from Price p where p.key.startDate = :date")
-        , @NamedQuery(name = Price.PRICE_FIND_ALL_ON_DAY_WITH_FIELD, query = "select p from Price p left join fetch p.key.restaurant left join fetch p.key.dish where p.key.startDate = :date")
-        , @NamedQuery(name = Price.PRICE_FIND_ALL_ON_DAY_IN_RESTAURANT, query = "select p from Price p where p.key.restaurant.id = :restaurant_id and p.key.startDate = :startDate")
-})
 public class Price implements PrimaryKeyGettable<PriceId> {
-    public static final String PRICE_DELETE = "PRICE.delete";
-    public static final String PRICE_FIND_ALL_ON_DAY = "PRICE.findAllOnDay";
-    public static final String PRICE_FIND_ALL_ON_DAY_WITH_FIELD = "PRICE.findAllOnDayWithField";
-    public static final String PRICE_FIND_ALL_ON_DAY_IN_RESTAURANT = "PRICE.findAllOnDayInRestaurant";
-
     @EmbeddedId
     private PriceId key;
 
@@ -54,13 +43,14 @@ public class Price implements PrimaryKeyGettable<PriceId> {
         return "Price{" +
                 "restaurant=" + key.getRestaurant() +
                 ", dish=" + key.getDish() +
-                ", startDate=" + key.getStartDate() +
+                ", date=" + key.getDate() +
                 ", price=" + price +
                 '}';
     }
 
-//    @Override
-//    public PriceId getKey() {
-//        return key;
-//    }
+    @Override
+    public boolean isNew() {
+        throw new UnsupportedOperationException("not supported in this class");
+    }
+
 }

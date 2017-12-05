@@ -50,11 +50,11 @@ CREATE TABLE vote (
 );
 
 CREATE TABLE price (
-  start_date    DATE           NOT NULL,
+  date          DATE           NOT NULL,
   price         NUMERIC(19, 2) NOT NULL,
   restaurant_id INT4           NOT NULL,
   dish_id       INT4           NOT NULL,
-  PRIMARY KEY (dish_id, restaurant_id, start_date),
+  PRIMARY KEY (dish_id, restaurant_id, date),
   FOREIGN KEY (dish_id) REFERENCES dish (id) ON DELETE CASCADE,
   FOREIGN KEY (restaurant_id) REFERENCES restaurant (id) ON DELETE CASCADE
 );

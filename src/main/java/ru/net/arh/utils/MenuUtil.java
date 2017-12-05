@@ -4,8 +4,8 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import ru.net.arh.model.Price;
 import ru.net.arh.model.Restaurant;
-import ru.net.arh.to.DayMenu;
-import ru.net.arh.to.RestaurantMenuItem;
+import ru.net.arh.to.menu.DayMenu;
+import ru.net.arh.to.menu.RestaurantMenuItem;
 
 import java.time.LocalDate;
 import java.util.List;

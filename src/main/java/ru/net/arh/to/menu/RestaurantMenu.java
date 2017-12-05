@@ -1,4 +1,4 @@
-package ru.net.arh.to;
+package ru.net.arh.to.menu;
 
 import lombok.extern.slf4j.Slf4j;
 import ru.net.arh.model.Price;

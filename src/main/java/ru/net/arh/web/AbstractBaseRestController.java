@@ -9,8 +9,8 @@ public abstract class AbstractBaseRestController<T extends AbstractBaseEntity> {
 
     protected abstract AbstractBaseService<T> getBaseService();
 
-    public T get(int id) {
-        return getBaseService().get(id);
+    public T get(int key) {
+        return getBaseService().get(key);
     }
 
     public List<T> getAll() {
@@ -21,8 +21,8 @@ public abstract class AbstractBaseRestController<T extends AbstractBaseEntity> {
         return getBaseService().update(value);
     }
 
-    public void delete(int id) {
-        getBaseService().delete(id);
+    public void delete(int key) {
+        getBaseService().delete(key);
     }
 
 }

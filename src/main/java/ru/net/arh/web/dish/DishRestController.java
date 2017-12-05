@@ -3,7 +3,7 @@ package ru.net.arh.web.dish;
 import lombok.extern.slf4j.Slf4j;
 import ru.net.arh.model.Dish;
 import ru.net.arh.service.AbstractBaseService;
-import ru.net.arh.service.dish.DishService;
+import ru.net.arh.service.dish.DishServiceImpl;
 import ru.net.arh.web.AbstractBaseRestController;
 
 import java.util.List;
@@ -12,15 +12,15 @@ import java.util.List;
 //@Controller
 public class DishRestController extends AbstractBaseRestController<Dish> {
     //    @Autowired
-    private DishService dishService;
+    private DishServiceImpl dishService;
 
     @Override
     protected AbstractBaseService<Dish> getBaseService() {
         return dishService;
     }
 
-    public Dish get(int id) {
-        return dishService.get(id);
+    public Dish get(int key) {
+        return dishService.get(key);
     }
 
     public List<Dish> getAll() {
@@ -32,8 +32,8 @@ public class DishRestController extends AbstractBaseRestController<Dish> {
         return dishService.update(dish);
     }
 
-    public void delete(int id) {
-        dishService.delete(id);
+    public void delete(int key) {
+        dishService.delete(key);
     }
 
 

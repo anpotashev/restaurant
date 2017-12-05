@@ -31,8 +31,8 @@ public class PriceId implements Serializable {
     @JoinColumn(name = "dish_id")
     Dish dish;
 
-    @Column(name = "start_date")
+    @Column(name = "date")
     @NotNull
     @NotBlank
-    LocalDate startDate;
+    LocalDate date;
 }

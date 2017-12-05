@@ -1,17 +1,9 @@
 package ru.net.arh.service.dish;
 
-import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
-import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ru.net.arh.configuration.SpringConfig;
 import ru.net.arh.model.Dish;
+import ru.net.arh.service.AbstractNamedServiceTest;
 import ru.net.arh.testdata.DishTestData;
 import ru.net.arh.testdata.GenericTestClass;
 import ru.net.arh.utils.exception.NotFoundException;
@@ -24,64 +16,36 @@ import static ru.net.arh.testdata.DishTestData.NEW_DISH;
 import static ru.net.arh.testdata.GenericTestClass.assertMatch;
 import static ru.net.arh.testdata.TestDBData.*;
 
-@ContextConfiguration(classes = SpringConfig.class)
-@RunWith(SpringJUnit4ClassRunner.class)
-@Sql(scripts = "classpath:db/populateDb.sql")
-public class DishServiceTest {
+public class DishServiceTest extends AbstractNamedServiceTest<Dish> {
 
-    static {
-        SLF4JBridgeHandler.install();
-    }
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
     @Autowired
     private DishService service;
 
-    @Before
-    public void setUp() throws Exception {
+    @Override
+    protected DishService getService() {
+        return service;
     }
+
 
     @Test
     public void get() throws Exception {
-        Dish dish = service.get(START_SEQ);
+        Dish dish = getService().get(START_SEQ);
         assertMatch(dish, DISH1);
     }
 
     @Test
-    public void getWithWrongId() throws Exception {
-        thrown.expect(NotFoundException.class);
-        service.get(-1);
-    }
-
-    @Test
-    public void create() throws Exception {
-        service.create(DishTestData.newDish());
-        List actual = service.getAll();
-        GenericTestClass.assertMatch(actual, DISH1, DISH2, DISH3, DISH4, NEW_DISH);
-    }
-
-    @Test
-    public void createWithEmptyName() throws Exception {
-        Dish dish = DishTestData.newDish();
-        dish.setName("");
-        service.create(dish);
-    }
-
-    @Test
     public void update() throws Exception {
-        Dish dish = new Dish(DISH4_UPDATED.getId(), DISH4_UPDATED.getName());
-        service.update(dish);
-        List actual = service.getAll();
+        Dish dish = new Dish(DISH4_UPDATED.getKey(), DISH4_UPDATED.getName());
+        getService().update(dish);
+        List actual = getService().getAll();
         assertMatch(actual, DISH1, DISH2, DISH3, DISH4_UPDATED);
-//        throw new RuntimeException("not implemented yet");
     }
 
     @Test
     public void updateWithWrongId() throws Exception {
         Dish dish = new Dish(-1, "dish with wrong id");
         thrown.expect(NotFoundException.class);
-        service.update(dish);
+        getService().update(dish);
     }
 
     @Test
@@ -93,33 +57,39 @@ public class DishServiceTest {
     }
 
     @Test
+    public void create() throws Exception {
+        getService().create(DishTestData.newDish());
+        List actual = getService().getAll();
+        GenericTestClass.assertMatch(actual, DISH1, DISH2, DISH3, DISH4, NEW_DISH);
+    }
+
+    @Test
+    public void createWithEmptyName() throws Exception {
+        Dish dish = DishTestData.newDish();
+        dish.setName("");
+        service.create(dish);
+    }
+
+    @Test
+    public void getAll() throws Exception {
+        List actual = getService().getAll();
+        assertMatch(actual, DISH1, DISH2, DISH3, DISH4);
+    }
+
+
+    @Test
     public void delete() throws Exception {
         service.delete(START_SEQ);
         List actual = service.getAll();
         assertMatch(actual, DISH2, DISH3, DISH4);
     }
 
-    @Test
-    public void deleteWithWrongId() throws Exception {
-        thrown.expect(NotFoundException.class);
-        service.delete(-1);
-    }
-
-    @Test
-    public void getAll() throws Exception {
-        List actual = service.getAll();
-        assertMatch(actual, DISH1, DISH2, DISH3, DISH4);
-    }
-
-    @Test
-    public void findStaringWithName() throws Exception {
-        List actual = service.findStaringWithName("блюдо");
-        assertMatch(actual, DISH1, DISH2, DISH3);
-    }
 
     @Test
     public void findStaringWithNameIgnoreCase() throws Exception {
-        List actual = service.findStaringWithNameIgnoreCase("блюдо");
+        List actual = getService().findAllByFirstPartOfNameIgnoringCase("блюдо");
         assertMatch(actual, DISH1, DISH2, DISH3, DISH4);
     }
+
+
 }

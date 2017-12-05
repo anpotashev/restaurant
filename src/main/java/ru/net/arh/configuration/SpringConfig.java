@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Import;
 @ComponentScan({
         "ru.net.arh.**.service"
         , "ru.net.arh.**.web"
-        , "ru.net.arh.**.jpa"
+        , "ru.net.arh.**.datajpa"
 })
 @Import({SpringDBConfig.class, SpringCacheConfig.class})
 public class SpringConfig {

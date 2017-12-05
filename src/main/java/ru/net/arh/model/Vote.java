@@ -1,9 +1,6 @@
 package ru.net.arh.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
@@ -15,6 +12,7 @@ import java.time.LocalDate;
 @Setter
 @EqualsAndHashCode
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 //@IdClass(VoteId.class)
 @Table(name = "vote",
@@ -48,8 +46,10 @@ public class Vote implements PrimaryKeyGettable<VoteId> {
                 '}';
     }
 
-//    @Override
-//    public VoteId getKey() {
-//        return key;
-//    }
+
+    @Override
+    public boolean isNew() {
+        throw new UnsupportedOperationException("not supported in this class");
+    }
+
 }
