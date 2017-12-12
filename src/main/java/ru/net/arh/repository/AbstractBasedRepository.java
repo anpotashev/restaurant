@@ -1,21 +1,16 @@
 package ru.net.arh.repository;
 
-import ru.net.arh.model.PrimaryKeyGettable;
-
-import java.io.Serializable;
 import java.util.List;
 
-public interface AbstractBasedRepository<T extends PrimaryKeyGettable<K>, K extends Serializable> {
+public interface AbstractBasedRepository<T> {
 
-    public T find(final K key);
+    T find(final int id);
 
-    public T create(final T value);
+    T create(final T value);
 
-    public T update(final T value);
+    T update(final T value);
 
-    public boolean delete(final K key);
+    boolean delete(final int id);
 
-    public List<T> findAll();
-
-
+    List<T> findAll();
 }

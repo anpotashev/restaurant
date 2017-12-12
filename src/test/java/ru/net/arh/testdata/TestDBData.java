@@ -12,7 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import static ru.net.arh.model.AbstractBaseEntity.START_SEQ;
+import static ru.net.arh.model.mapped.AbstractBaseEntity.START_SEQ;
 
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

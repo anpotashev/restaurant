@@ -1,28 +1,38 @@
 package ru.net.arh.model;
 
 import lombok.*;
-import lombok.extern.slf4j.Slf4j;
+import ru.net.arh.model.key.VoteId;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
-@Slf4j
 @Getter
 @Setter
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-//@IdClass(VoteId.class)
-@Table(name = "vote",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "date"}, name = "vote_unique_user_date_idx")})
-@NamedQueries({
-        @NamedQuery(name = "VOTE.findAllByDate", query = "select v from Vote v where v.key.date=:date order by v.restaurant.id, v.key.user.id")
-})
-public class Vote implements PrimaryKeyGettable<VoteId> {
+@Table
+//        (name = "vote", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "date"}, name = "vote_unique_user_date_idx")})
+//@NamedQueries({
+//        @NamedQuery(name = "VOTE.findAllByDate", query = "select v from Vote v where v.key.date=:date order by v.restaurant.id, v.key.user.id")
+//})
 
-    public static final String VOTE_FIND_ALL_BY_DATE = "VOTE.findAllByDate";
+@NamedQueries({
+        @NamedQuery(name = Vote.DELETE_QUERY_NAME, query = "delete from Vote v where v.key.user.id = :userId and" +
+                " v.key.date = :date")
+        , @NamedQuery(name = Vote.GET_VOTES_COUNT_FOR_RESTAURANTS_AND_DATE_QUERY_NAME, query = "select count(v) from" +
+        " Vote v where v.restaurant.id = :restaurantId and v.key.date = :date")
+//        , @NamedQuery(name = Dish.FIND_ALL_QUERY_NAME, query = "select d from Dish d order by d.id asc")
+//        , @NamedQuery(name = Dish.FIND_ALL_BY_FIRST_PART_OF_NAME_QUERY_NAME, query = "select d from Dish d " +
+//        "where lower(d.name) like lower(concat(:firstPartOfName, '%') ) order by d.id asc")
+})
+public class Vote implements DeleteNamedQueryExists {
+
+    public static final String GET_VOTES_COUNT_FOR_RESTAURANTS_AND_DATE_QUERY_NAME = "Vote.getVotesCountForRestaurantInDate";
+    static final String DELETE_QUERY_NAME = "Vote.delete";
+//    public static final String VOTE_FIND_ALL_BY_DATE = "VOTE.findAllByDate";
 
     @EmbeddedId
     private VoteId key;
@@ -40,16 +50,10 @@ public class Vote implements PrimaryKeyGettable<VoteId> {
     @Override
     public String toString() {
         return "Vote{" +
-                "user=" + key.getUser() +
+                "userId=" + key.getUser().getId() +
                 ", date=" + key.getDate() +
-                ", restaurant=" + restaurant +
+                ", restaurantId=" + restaurant.getId() +
                 '}';
-    }
-
-
-    @Override
-    public boolean isNew() {
-        throw new UnsupportedOperationException("not supported in this class");
     }
 
 }

@@ -3,6 +3,7 @@ package ru.net.arh.configuration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
 
 @Slf4j
@@ -10,9 +11,14 @@ import org.springframework.context.annotation.Import;
 @ComponentScan({
         "ru.net.arh.**.service"
         , "ru.net.arh.**.web"
-        , "ru.net.arh.**.datajpa"
+        , "ru.net.arh.**.jpa"
+        , "ru.net.arh.utils.aop"
 })
-@Import({SpringDBConfig.class, SpringCacheConfig.class})
+@Import({
+        SpringDBConfig.class
+//        , SpringCacheConfig.class
+})
+@EnableAspectJAutoProxy
 public class SpringConfig {
 
 }

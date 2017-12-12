@@ -1,19 +1,16 @@
 package ru.net.arh.service.vote;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.net.arh.model.Vote;
 import ru.net.arh.repository.VoteRepository;
-import ru.net.arh.to.vote.DayVotes;
-import ru.net.arh.utils.DayVoteUtil;
-import ru.net.arh.utils.ValidationUnit;
+import ru.net.arh.service.VoteService;
+import ru.net.arh.utils.aop.annotation.NeedValidateReturnValueForNullOnCreate;
 
 import java.time.LocalDate;
 
 import static ru.net.arh.utils.VoteUtil.canRevote;
 
-@Slf4j
 @Service
 public class VoteServiceImpl implements VoteService {
 
@@ -21,17 +18,16 @@ public class VoteServiceImpl implements VoteService {
     private VoteRepository repository;
 
     @Override
+    @NeedValidateReturnValueForNullOnCreate
     public Vote save(int userId, int restaurantId) {
-        return canRevote() ? repository.updateOrCreate(userId, restaurantId)
-                : ValidationUnit.checkCreateResult(repository.create(userId, restaurantId),
-                "userId=" + userId
-                        + ", date=" + LocalDate.now()
-        );
+        return canRevote()
+                ? repository.updateOrCreate(userId, restaurantId)
+                : repository.create(userId, restaurantId);
     }
 
     @Override
-    public DayVotes getDaysVotes(LocalDate date) {
-        return DayVoteUtil.convert(repository.getDaysVotes(date), date);
+    public int getRestaurantVotesForDay(int restaurantId, LocalDate date) {
+        return repository.getRestaurantVotesForDay(restaurantId, date);
     }
 
 }

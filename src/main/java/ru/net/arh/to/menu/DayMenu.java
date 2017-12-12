@@ -23,12 +23,12 @@ public class DayMenu {
         StringBuilder builder = new StringBuilder(date.toString());
         restarauntMenu.forEach((restaurant, restaurantMenuItems) -> {
             builder.append("\n")
-                    .append(restaurant.getKey())
+                    .append(restaurant.getId())
                     .append(" - ")
                     .append(restaurant.getName());
             restaurantMenuItems.forEach(restaurantMenuItem -> {
                 builder.append("\n")
-                        .append(restaurantMenuItem.getDish().getKey())
+                        .append(restaurantMenuItem.getDish().getId())
                         .append(" - ")
                         .append(restaurantMenuItem.getDish().getName())
                         .append(" - ")

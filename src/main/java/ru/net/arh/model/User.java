@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import ru.net.arh.model.mapped.NamedBasedEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -21,8 +22,15 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "email", name = "users_unique_email_idx")})
+@Table
+        (name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "email", name = "users_unique_email_idx")})
+@NamedQueries({
+        @NamedQuery(name = User.DELETE_QUERY_NAME, query = "delete from User u where u.id = :id")
+        , @NamedQuery(name = User.FIND_ALL_QUERY_NAME, query = "select u from User u order by u.id asc")
+})
 public class User extends NamedBasedEntity {
+    static final String DELETE_QUERY_NAME = "User.delete";
+    static final String FIND_ALL_QUERY_NAME = "User.findAll";
 
     @Column(name = "email", nullable = false, unique = true)
     @Email
@@ -49,12 +57,12 @@ public class User extends NamedBasedEntity {
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-    public User(Integer key, String name, String email, String password, Role role, Role... roles) {
-        this(key, name, email, password, true, EnumSet.of(role, roles));
+    public User(Integer id, String name, String email, String password, Role role, Role... roles) {
+        this(id, name, email, password, true, EnumSet.of(role, roles));
     }
 
-    public User(Integer key, String name, String email, String password, boolean b, EnumSet<Role> roles) {
-        super(key, name);
+    public User(Integer id, String name, String email, String password, boolean b, EnumSet<Role> roles) {
+        super(id, name);
         this.email = email;
         this.password = password;
         this.enabled = enabled;

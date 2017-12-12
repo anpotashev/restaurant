@@ -31,9 +31,6 @@ public class SpringCacheConfig {
         JCacheManagerFactoryBean factoryBean = new JCacheManagerFactoryBean();
 //        URI uri = new URI("file:///classpath:cache/ehcache.xml");
         URI uri = ClassLoader.getSystemResource("cache/ehcache.xml").toURI();
-        System.out.println("____________________________\n");
-        System.out.println(uri.toString());
-        System.out.println("____________________________\n");
         factoryBean.setCacheManagerUri(uri);
         return factoryBean;
     }

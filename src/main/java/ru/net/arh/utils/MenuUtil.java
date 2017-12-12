@@ -22,6 +22,22 @@ public class MenuUtil {
         return new DayMenu(date, collect);
     }
 
+//    public static DayMenu convert(List<Restaurant> restaurants, LocalDate date) {
+//
+//
+//
+//        Map<Restaurant, List<RestaurantMenuItem>> map = new HashMap<>();
+//        restaurants.stream()
+//                .forEach(restaurant ->
+//                        map.put(restaurant, restaurant.getPrices().stream()
+//                                .map(price -> new RestaurantMenuItem(price))
+//                                .collect(Collectors.toList())
+//                        )
+//                );
+//
+//        return new DayMenu(date, map);
+//    }
+
     private static Restaurant priceToRestaurant(Price price) {
         return price.getKey().getRestaurant();
     }

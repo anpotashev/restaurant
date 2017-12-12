@@ -2,7 +2,7 @@ package ru.net.arh.service;
 
 import org.junit.Assert;
 import org.junit.Test;
-import ru.net.arh.model.NamedBasedEntity;
+import ru.net.arh.model.mapped.NamedBasedEntity;
 
 public abstract class AbstractNamedServiceTest<T extends NamedBasedEntity> extends AbstractBaseServiceTest<T> {
 

@@ -1,9 +1,10 @@
 package ru.net.arh.service.vote;
 
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.net.arh.service.BaseTest;
-import ru.net.arh.to.vote.DayVotes;
+import ru.net.arh.service.VoteService;
 import ru.net.arh.utils.VoteUtil;
 import ru.net.arh.utils.exception.CreateWithFoundKeyException;
 
@@ -11,7 +12,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import static ru.net.arh.testdata.TestDBData.*;
-import static ru.net.arh.testdata.VoteTestData.*;
+import static ru.net.arh.testdata.VoteTestData.NEW_VOTE;
+import static ru.net.arh.testdata.VoteTestData.VOTE_AFTER_CHANGE;
 
 public class VoteServiceTest extends BaseTest {
     @Autowired
@@ -20,42 +22,46 @@ public class VoteServiceTest extends BaseTest {
     @Test
     public void voteWhenCanRevote() throws Exception {
         VoteUtil.setCanRevoteUtilTime(LocalTime.MAX);
-        service.save(NEW_VOTE.getKey().getUser().getKey(), NEW_VOTE.getRestaurant().getKey());
-        DayVotes dayVotes = service.getDaysVotes(LocalDate.now());
-        DayVotes expected = getExpectedDayVotesForToday(VOTE1, VOTE2, VOTE3, NEW_VOTE);
-        assertMatch(dayVotes, expected);
-
+        service.save(NEW_VOTE.getKey().getUser().getId(), NEW_VOTE.getRestaurant().getId());
+        int counts = service.getRestaurantVotesForDay(RESTAURANT1.getId(), LocalDate.now());
+        Assertions.assertThat(counts).isEqualTo(3);
     }
 
     @Test
     public void voteWhenCanNotRevote() throws Exception {
         VoteUtil.setCanRevoteUtilTime(LocalTime.MIN);
-        service.save(NEW_VOTE.getKey().getUser().getKey(), NEW_VOTE.getRestaurant().getKey());
-        DayVotes dayVotes = service.getDaysVotes(LocalDate.now());
-        DayVotes expected = getExpectedDayVotesForToday(VOTE1, VOTE2, VOTE3, NEW_VOTE);
-        assertMatch(dayVotes, expected);
+        service.save(NEW_VOTE.getKey().getUser().getId(), NEW_VOTE.getRestaurant().getId());
+        int counts = service.getRestaurantVotesForDay(RESTAURANT1.getId(), LocalDate.now());
+        Assertions.assertThat(counts).isEqualTo(3);
     }
 
     @Test
     public void revoteWhenCanRevote() throws Exception {
         VoteUtil.setCanRevoteUtilTime(LocalTime.MAX);
-        service.save(VOTE_AFTER_CHANGE.getKey().getUser().getKey(), VOTE_AFTER_CHANGE.getRestaurant().getKey());
-        DayVotes dayVotes = service.getDaysVotes(LocalDate.now());
-        DayVotes expected = getExpectedDayVotesForToday(VOTE_AFTER_CHANGE, VOTE2, VOTE3);
-        assertMatch(dayVotes, expected);
+        service.save(VOTE_AFTER_CHANGE.getKey().getUser().getId(), VOTE_AFTER_CHANGE.getRestaurant().getId());
+        int counts = service.getRestaurantVotesForDay(RESTAURANT1.getId(), LocalDate.now());
+        Assertions.assertThat(counts).isEqualTo(1);
+        counts = service.getRestaurantVotesForDay(RESTAURANT2.getId(), LocalDate.now());
+        Assertions.assertThat(counts).isEqualTo(2);
     }
 
     @Test
     public void revoteWhenCanNotRevote() throws Exception {
         VoteUtil.setCanRevoteUtilTime(LocalTime.MIN);
         thrown.expect(CreateWithFoundKeyException.class);
-        service.save(VOTE_AFTER_CHANGE.getKey().getUser().getKey(), VOTE_AFTER_CHANGE.getRestaurant().getKey());
+        service.save(VOTE_AFTER_CHANGE.getKey().getUser().getId(), VOTE_AFTER_CHANGE.getRestaurant().getId());
+    }
+
+
+    @Test
+    public void getVotesCountsForRestaurantForDay() throws Exception {
+        int counts = service.getRestaurantVotesForDay(RESTAURANT1.getId(), LocalDate.now());
+        Assertions.assertThat(counts).isEqualTo(2);
     }
 
     @Test
-    public void getDayVotes() {
-        DayVotes dayVotes = service.getDaysVotes(LocalDate.now());
-        DayVotes expected = getExpectedDayVotesForToday(VOTE1, VOTE2, VOTE3);
-        assertMatch(dayVotes, expected);
+    public void getVotesCountsForRestaurantForDayWithZeroResult() throws Exception {
+        int counts = service.getRestaurantVotesForDay(RESTAURANT4.getId(), LocalDate.now());
+        Assertions.assertThat(counts).isEqualTo(0);
     }
 }

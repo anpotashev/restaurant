@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ru.net.arh.model.Dish;
 
-import static ru.net.arh.model.AbstractBaseEntity.START_SEQ;
+import static ru.net.arh.model.mapped.AbstractBaseEntity.START_SEQ;
 
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

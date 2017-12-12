@@ -4,13 +4,14 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.net.arh.model.Dish;
 import ru.net.arh.service.AbstractNamedServiceTest;
+import ru.net.arh.service.DishService;
 import ru.net.arh.testdata.DishTestData;
 import ru.net.arh.testdata.GenericTestClass;
 import ru.net.arh.utils.exception.NotFoundException;
 
 import java.util.List;
 
-import static ru.net.arh.model.AbstractBaseEntity.START_SEQ;
+import static ru.net.arh.model.mapped.AbstractBaseEntity.START_SEQ;
 import static ru.net.arh.testdata.DishTestData.DISH4_UPDATED;
 import static ru.net.arh.testdata.DishTestData.NEW_DISH;
 import static ru.net.arh.testdata.GenericTestClass.assertMatch;
@@ -35,7 +36,7 @@ public class DishServiceTest extends AbstractNamedServiceTest<Dish> {
 
     @Test
     public void update() throws Exception {
-        Dish dish = new Dish(DISH4_UPDATED.getKey(), DISH4_UPDATED.getName());
+        Dish dish = new Dish(DISH4_UPDATED.getId(), DISH4_UPDATED.getName());
         getService().update(dish);
         List actual = getService().getAll();
         assertMatch(actual, DISH1, DISH2, DISH3, DISH4_UPDATED);
@@ -50,7 +51,7 @@ public class DishServiceTest extends AbstractNamedServiceTest<Dish> {
 
     @Test
     public void updateWithEmptyName() throws Exception {
-        Dish dish = service.get(START_SEQ);
+        Dish dish = service.get(DISH1.getId());
         dish.setName("");
         service.update(dish);
         throw new RuntimeException("not working validation yet");

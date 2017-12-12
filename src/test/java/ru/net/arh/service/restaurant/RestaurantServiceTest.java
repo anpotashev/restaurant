@@ -5,12 +5,12 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.net.arh.model.Restaurant;
 import ru.net.arh.service.AbstractNamedServiceTest;
+import ru.net.arh.service.RestaurantService;
 import ru.net.arh.testdata.RestaurantTestData;
 import ru.net.arh.utils.exception.NotFoundException;
 
 import java.util.List;
 
-import static ru.net.arh.model.AbstractBaseEntity.START_SEQ;
 import static ru.net.arh.testdata.GenericTestClass.assertMatch;
 import static ru.net.arh.testdata.RestaurantTestData.NEW_RESTAURANT;
 import static ru.net.arh.testdata.RestaurantTestData.RESTAURANT_UPDATED;
@@ -51,7 +51,7 @@ public class RestaurantServiceTest extends AbstractNamedServiceTest<Restaurant> 
 
     @Test
     public void update() throws Exception {
-        Restaurant restaurant = new Restaurant(RESTAURANT_UPDATED.getKey(), RESTAURANT_UPDATED.getName());
+        Restaurant restaurant = new Restaurant(RESTAURANT_UPDATED.getId(), RESTAURANT_UPDATED.getName());
         getService().update(restaurant);
         List actual = getService().getAll();
         assertMatch(actual, RESTAURANT_UPDATED, RESTAURANT2, RESTAURANT3, RESTAURANT4);
@@ -66,7 +66,7 @@ public class RestaurantServiceTest extends AbstractNamedServiceTest<Restaurant> 
 
     @Test
     public void updateWithEmptyName() throws Exception {
-        Restaurant restaurant = getService().get(START_SEQ);
+        Restaurant restaurant = getService().get(RESTAURANT1.getId());
         restaurant.setName("");
         getService().update(restaurant);
         throw new RuntimeException("not working validation yet");

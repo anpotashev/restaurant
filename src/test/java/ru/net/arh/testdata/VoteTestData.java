@@ -18,10 +18,10 @@ import static ru.net.arh.testdata.TestDBData.*;
 public class VoteTestData {
 
     public static final Vote VOTE_AFTER_CHANGE = new Vote(USER, LocalDate.now(), RESTAURANT2);
-    public static final Vote NEW_VOTE = new Vote(USER3, LocalDate.now(), RESTAURANT2);
+    public static final Vote NEW_VOTE = new Vote(USER3, LocalDate.now(), RESTAURANT1);
 
     public static Vote getNew() {
-        return new Vote(USER3, LocalDate.now(), RESTAURANT2);
+        return new Vote(USER3, LocalDate.now(), RESTAURANT1);
     }
 
     public static void assertMatch(Vote actual, Vote expected) {

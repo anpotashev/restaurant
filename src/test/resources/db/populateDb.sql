@@ -32,20 +32,20 @@ INSERT INTO user_roles (role, user_id) VALUES
   ('ROLE_USER', 100010),
   ('ROLE_ADMIN', 100010);
 INSERT INTO price (restaurant_id, dish_id, date, price) VALUES
+  (100004, 100000, 'yesterday', 10.00),
+  (100004, 100001, 'yesterday', 11.00),
+  (100004, 100002, 'yesterday', 12.00),
+
+  (100004, 100001, 'today', 10.11),
+  (100004, 100002, 'today', 10.12),
+  (100004, 100003, 'today', 10.13),
+
   (100005, 100000, 'yesterday', 10.00),
-  (100005, 100001, 'yesterday', 11.00),
-  (100005, 100002, 'yesterday', 12.00),
+  (100005, 100003, 'yesterday', 11.00),
 
-  (100005, 100001, 'today', 10.11),
-  (100005, 100002, 'today', 10.12),
-  (100005, 100003, 'today', 10.13),
-
-  (100006, 100000, 'yesterday', 10.00),
-  (100006, 100003, 'yesterday', 11.00),
-
-  (100006, 100000, 'today', 12.00),
-  (100006, 100001, 'today', 14.00),
-  (100006, 100003, 'today', 16.00);
+  (100005, 100000, 'today', 12.00),
+  (100005, 100001, 'today', 14.00),
+  (100005, 100003, 'today', 16.00);
 
 INSERT INTO vote (date, user_id, restaurant_id) VALUES
   ('today', 100008, 100004),

@@ -1,6 +1,6 @@
 package ru.net.arh.service;
 
-import ru.net.arh.model.NamedBasedEntity;
+import ru.net.arh.model.mapped.NamedBasedEntity;
 
 import java.util.List;
 
