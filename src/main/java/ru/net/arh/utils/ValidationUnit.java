@@ -3,8 +3,8 @@ package ru.net.arh.utils;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import ru.net.arh.utils.exception.CreateWithFoundKeyException;
-import ru.net.arh.utils.exception.NotFoundException;
+import ru.net.arh.utils.exception.DuplicateValueForUniqueIndexException;
+import ru.net.arh.utils.exception.Exception404;
 
 import java.io.Serializable;
 
@@ -27,11 +27,11 @@ public class ValidationUnit {
 
     public static void checkNotFound(boolean found, String msg) {
         if (!found)
-            throw new NotFoundException("Not found entity with " + msg);
+            throw new Exception404("Not found entity with " + msg);
     }
 
     public static <T> T checkCreateResult(T object, String keyDescription) {
         if (object != null) return object;
-        throw new CreateWithFoundKeyException("Error creating entity. Already found with key: " + keyDescription);
+        throw new DuplicateValueForUniqueIndexException("Error creating entity. Already found with key: " + keyDescription);
     }
 }

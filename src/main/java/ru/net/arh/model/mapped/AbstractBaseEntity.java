@@ -17,6 +17,7 @@ public abstract class AbstractBaseEntity implements DeleteNamedQueryExists {
     public static final int START_SEQ = 100000;
 
     @Getter
+    @Setter
     @Id
     @Column(name = "id")
     @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = START_SEQ)
@@ -32,6 +33,7 @@ public abstract class AbstractBaseEntity implements DeleteNamedQueryExists {
     public boolean isNew() {
         return id == null;
     }
+
 
 //    public static String getDeleteNamedQueryName() {
 //        throw new UnsupportedOperationException("must be overriding on subclasses");

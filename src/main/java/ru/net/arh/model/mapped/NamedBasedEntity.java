@@ -1,5 +1,6 @@
 package ru.net.arh.model.mapped;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,10 @@ public class NamedBasedEntity extends AbstractBaseEntity {
     @Size(min = 2, max = 100)
     @Column(name = "name")
     protected String name;
+
+    @JsonIgnore
+    @Column(name = "deleted")
+    boolean deleted;
 
     public NamedBasedEntity(Integer id, String name) {
         super(id);

@@ -3,6 +3,7 @@ package ru.net.arh.web.rest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.net.arh.web.vote.VoteController;
 
@@ -17,20 +18,21 @@ public class VoteRestController {
     private VoteController voteController;
 
     @PostMapping
-    public void vote(@PathVariable("restaurantId") int restaurantId) {
+    public ResponseEntity<Void> vote(@PathVariable("restaurantId") int restaurantId) {
         voteController.vote(restaurantId);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping
-    public int votes(@PathVariable("restaurantId") int restaurantId) {
-        return voteController.getVotesCount(restaurantId);
+    public ResponseEntity<Integer> votes(@PathVariable("restaurantId") int restaurantId) {
+        return ResponseEntity.ok(voteController.getVotesCount(restaurantId));
     }
 
     @GetMapping("/{date}")
-    public int votes(
+    public ResponseEntity<Integer> votes(
             @PathVariable("restaurantId") int restaurantId
             , @PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date
     ) {
-        return voteController.getVotesCount(restaurantId, date);
+        return ResponseEntity.ok(voteController.getVotesCount(restaurantId, date));
     }
 }

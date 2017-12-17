@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import ru.net.arh.model.Vote;
 import ru.net.arh.repository.VoteRepository;
 import ru.net.arh.service.VoteService;
-import ru.net.arh.utils.aop.annotation.NeedValidateReturnValueForNullOnCreate;
 
 import java.time.LocalDate;
 
@@ -18,7 +17,6 @@ public class VoteServiceImpl implements VoteService {
     private VoteRepository repository;
 
     @Override
-    @NeedValidateReturnValueForNullOnCreate
     public Vote save(int userId, int restaurantId) {
         return canRevote()
                 ? repository.updateOrCreate(userId, restaurantId)

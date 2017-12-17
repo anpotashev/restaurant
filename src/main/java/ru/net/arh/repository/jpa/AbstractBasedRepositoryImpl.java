@@ -22,20 +22,20 @@ public abstract class AbstractBasedRepositoryImpl<T extends AbstractBaseEntity> 
     protected abstract Class<T> getEntityClass();
 
     @Override
-    public T find(int id) {
+    public T find(final int id) {
         return em.find(getEntityClass(), id);
     }
 
     @Override
     @Transactional
-    public T create(T value) {
+    public T create(final T value) {
         em.persist(value);
         return value;
     }
 
     @Override
     @Transactional
-    public T update(T value) {
+    public T update(final T value) {
         if (find(value.getId()) == null)
             return null;
         return em.merge(value);
@@ -43,11 +43,13 @@ public abstract class AbstractBasedRepositoryImpl<T extends AbstractBaseEntity> 
 
     @Override
     @Transactional
-    public boolean delete(int id) {
-        String namedQueryName = NamedQueriesUtil.getDeleteNamedQuery(getEntityClass());
-        return em.createNamedQuery(namedQueryName)
-                .setParameter("id", id)
-                .executeUpdate() > 0;
+    public boolean delete(final int id) {
+        em.remove(em.getReference(getEntityClass(), id));
+        return true;
+//        String namedQueryName = NamedQueriesUtil.getDeleteNamedQuery(getEntityClass());
+//        return em.createNamedQuery(namedQueryName)
+//                .setParameter("id", id)
+//                .executeUpdate() > 0;
     }
 
     @Override

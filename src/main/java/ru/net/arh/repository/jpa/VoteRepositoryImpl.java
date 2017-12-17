@@ -23,7 +23,7 @@ public class VoteRepositoryImpl implements VoteRepository {
 
     @Override
     @Transactional
-    public Vote create(int userId, int restaurantId) {
+    public Vote create(final int userId, final int restaurantId) {
         if (checkExists(userId, LocalDate.now()))
             return null;
         return em.merge(getVote(userId, restaurantId, LocalDate.now()));
@@ -31,7 +31,7 @@ public class VoteRepositoryImpl implements VoteRepository {
 
     @Override
     @Transactional
-    public Vote updateOrCreate(int userId, int restaurantId) {
+    public Vote updateOrCreate(final int userId, final int restaurantId) {
         if (!checkExists(userId, LocalDate.now())) {
             return em.merge(getVote(userId, restaurantId, LocalDate.now()));
         }
@@ -45,25 +45,25 @@ public class VoteRepositoryImpl implements VoteRepository {
     }
 
     @Override
-    public int getRestaurantVotesForDay(int restaurantId, LocalDate date) {
+    public int getRestaurantVotesForDay(final int restaurantId, final LocalDate date) {
         return (em.createNamedQuery(Vote.GET_VOTES_COUNT_FOR_RESTAURANTS_AND_DATE_QUERY_NAME, Long.class)
                 .setParameter("restaurantId", restaurantId)
                 .setParameter("date", date)
                 .getSingleResult()).intValue();
     }
 
-    private VoteId getVoteId(int userId, LocalDate date) {
+    private VoteId getVoteId(final int userId, final LocalDate date) {
         User user = em.getReference(User.class, userId);
         return new VoteId(user, date);
     }
 
-    private Vote getVote(int userId, int restaurantId, LocalDate date) {
+    private Vote getVote(final int userId, final int restaurantId, final LocalDate date) {
         VoteId voteId = getVoteId(userId, date);
         Restaurant restaurant = em.getReference(Restaurant.class, restaurantId);
         return new Vote(voteId, restaurant);
     }
 
-    private boolean checkExists(int userId, LocalDate date) {
+    private boolean checkExists(final int userId, final LocalDate date) {
         VoteId voteId = getVoteId(userId, date);
         return em.find(Vote.class, voteId) != null;
     }

@@ -18,7 +18,11 @@ public abstract class AbstractBaseController<T extends AbstractBaseEntity> {
     }
 
     public T save(T value) {
+        if (value.isNew()) {
+            return getService().create(value);
+        }
         return getService().update(value);
+
     }
 
     public void delete(int key) {

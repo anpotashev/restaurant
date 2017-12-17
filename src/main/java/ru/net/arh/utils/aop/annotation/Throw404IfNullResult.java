@@ -7,5 +7,6 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface NeedValidateReturnValueForNullOrFalse {
+public @interface Throw404IfNullResult {
+    String message() default "Not found entity with this key";
 }

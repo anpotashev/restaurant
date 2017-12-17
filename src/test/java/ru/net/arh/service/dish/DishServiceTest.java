@@ -7,7 +7,7 @@ import ru.net.arh.service.AbstractNamedServiceTest;
 import ru.net.arh.service.DishService;
 import ru.net.arh.testdata.DishTestData;
 import ru.net.arh.testdata.GenericTestClass;
-import ru.net.arh.utils.exception.NotFoundException;
+import ru.net.arh.utils.exception.Exception404;
 
 import java.util.List;
 
@@ -45,7 +45,7 @@ public class DishServiceTest extends AbstractNamedServiceTest<Dish> {
     @Test
     public void updateWithWrongId() throws Exception {
         Dish dish = new Dish(-1, "dish with wrong id");
-        thrown.expect(NotFoundException.class);
+        thrown.expect(Exception404.class);
         getService().update(dish);
     }
 

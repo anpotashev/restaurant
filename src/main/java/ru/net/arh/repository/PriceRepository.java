@@ -1,18 +1,23 @@
 package ru.net.arh.repository;
 
 import ru.net.arh.model.Price;
+import ru.net.arh.to.menu.MenuItem;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public interface PriceRepository {
 
-    Price create(int restaurantId, int dishId, LocalDate date, double price);
+//    Price create(LocalDate date, int restaurantId, int dishId, double price);
 
-    boolean delete(int restaurantId, int dishId, LocalDate date);
+    boolean delete(final int id);
 
-    Price update(int restaurantId, int dishId, LocalDate date, double price);
+//    Price update(final LocalDate date, final int id, final int restaurantId, final int dishId, final double price);
 
-    List<Price> getAllForRestorantInDay(int restaurantId, LocalDate date);
+    List<Price> getAllForRestorantInDay(final int restaurantId, final LocalDate date);
+
+    List<Price> create(final LocalDate date, final int restaurantId, MenuItem... menuItems);
+
+    List<Price> update(final LocalDate date, final int restaurantId, MenuItem... menuItems);
 
 }

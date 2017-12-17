@@ -9,15 +9,17 @@ DROP SEQUENCE IF EXISTS global_seq;
 CREATE SEQUENCE global_seq START 100000;
 
 CREATE TABLE dish (
-  id   INT4         NOT NULL DEFAULT nextval('global_seq'),
-  name VARCHAR(255) NOT NULL,
+  id      INT4         NOT NULL DEFAULT nextval('global_seq'),
+  name    VARCHAR(255) NOT NULL,
+  deleted BOOLEAN      NOT NULL DEFAULT FALSE,
   PRIMARY KEY (id)
 );
 
 
 CREATE TABLE restaurant (
-  id   INT4         NOT NULL DEFAULT nextval('global_seq'),
-  name VARCHAR(255) NOT NULL,
+  id      INT4         NOT NULL DEFAULT nextval('global_seq'),
+  name    VARCHAR(255) NOT NULL,
+  deleted BOOLEAN      NOT NULL DEFAULT FALSE,
   PRIMARY KEY (id)
 );
 
@@ -50,11 +52,14 @@ CREATE TABLE vote (
 );
 
 CREATE TABLE price (
+  id            INT4           NOT NULL DEFAULT nextval('global_seq'),
   date          DATE           NOT NULL,
   price         NUMERIC(19, 2) NOT NULL,
   restaurant_id INT4           NOT NULL,
   dish_id       INT4           NOT NULL,
-  PRIMARY KEY (dish_id, restaurant_id, date),
+  PRIMARY KEY (id),
   FOREIGN KEY (dish_id) REFERENCES dish (id) ON DELETE CASCADE,
   FOREIGN KEY (restaurant_id) REFERENCES restaurant (id) ON DELETE CASCADE
 );
+CREATE UNIQUE INDEX price_restaurant_id_dish_id_date_idx
+  ON price (dish_id, restaurant_id, date)

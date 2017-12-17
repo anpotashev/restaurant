@@ -14,7 +14,7 @@ import java.util.List;
 public abstract class AbstractNamedRepositoryImpl<T extends NamedBasedEntity> extends AbstractBasedRepositoryImpl<T> implements AbstractNamedBasedRepository<T> {
 
     @Override
-    public List<T> findAllByFirstPartOfNameIgnoringCase(String firstPartOfName) {
+    public List<T> findAllByFirstPartOfNameIgnoringCase(final String firstPartOfName) {
         String findByFirstPartNamedQueryName = NamedQueriesUtil.getFindAllByFirstPartOfNameNamedQuery(getEntityClass());
         return em.createNamedQuery(findByFirstPartNamedQueryName)
                 .setParameter("firstPartOfName", firstPartOfName)
@@ -39,4 +39,5 @@ public abstract class AbstractNamedRepositoryImpl<T extends NamedBasedEntity> ex
             return Restaurant.class;
         }
     }
+
 }

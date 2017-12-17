@@ -7,7 +7,7 @@ import ru.net.arh.model.Restaurant;
 import ru.net.arh.service.AbstractNamedServiceTest;
 import ru.net.arh.service.RestaurantService;
 import ru.net.arh.testdata.RestaurantTestData;
-import ru.net.arh.utils.exception.NotFoundException;
+import ru.net.arh.utils.exception.Exception404;
 
 import java.util.List;
 
@@ -60,7 +60,7 @@ public class RestaurantServiceTest extends AbstractNamedServiceTest<Restaurant> 
     @Test
     public void updateWithWrongId() throws Exception {
         Restaurant restaurant = new Restaurant(-1, "restaurant with wrong id");
-        thrown.expect(NotFoundException.class);
+        thrown.expect(Exception404.class);
         getService().update(restaurant);
     }
 
@@ -81,7 +81,7 @@ public class RestaurantServiceTest extends AbstractNamedServiceTest<Restaurant> 
 
     @Test
     public void deleteWithWrongId() throws Exception {
-        thrown.expect(NotFoundException.class);
+        thrown.expect(Exception404.class);
         getService().delete(-1);
     }
 

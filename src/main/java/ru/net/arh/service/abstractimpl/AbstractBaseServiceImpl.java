@@ -3,7 +3,8 @@ package ru.net.arh.service.abstractimpl;
 import ru.net.arh.model.mapped.AbstractBaseEntity;
 import ru.net.arh.repository.AbstractBasedRepository;
 import ru.net.arh.service.AbstractBaseService;
-import ru.net.arh.utils.aop.annotation.NeedValidateReturnValueForNullOrFalse;
+import ru.net.arh.utils.aop.annotation.Throw404IfFalseResult;
+import ru.net.arh.utils.aop.annotation.Throw404IfNullResult;
 
 import java.util.List;
 
@@ -12,24 +13,24 @@ public abstract class AbstractBaseServiceImpl<T extends AbstractBaseEntity> impl
     protected abstract AbstractBasedRepository<T> getRepository();
 
     @Override
-    @NeedValidateReturnValueForNullOrFalse
+    @Throw404IfNullResult
     public T get(int id) {
         return getRepository().find(id);
     }
 
     @Override
-    @NeedValidateReturnValueForNullOrFalse
-    public T update(T value) {
+    @Throw404IfNullResult
+    public T update(final T value) {
         return getRepository().update(value);
     }
 
     @Override
-    public T create(T value) {
+    public T create(final T value) {
         return getRepository().create(value);
     }
 
     @Override
-    @NeedValidateReturnValueForNullOrFalse
+    @Throw404IfFalseResult
     public boolean delete(int id) {
         return getRepository().delete(id);
     }

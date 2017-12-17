@@ -1,74 +1,93 @@
 package ru.net.arh.utils.aop;
 
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
+import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
-import ru.net.arh.model.mapped.AbstractBaseEntity;
-import ru.net.arh.utils.exception.CreateWithFoundKeyException;
-import ru.net.arh.utils.exception.NotFoundException;
+import ru.net.arh.utils.aop.annotation.*;
+import ru.net.arh.utils.exception.DateIsBeforeExection;
+import ru.net.arh.utils.exception.DuplicateValueForUniqueIndexException;
+import ru.net.arh.utils.exception.Exception404;
+import ru.net.arh.utils.exception.ExceptionDuringSave;
 
+import java.time.LocalDate;
+import java.util.List;
+
+@Slf4j
 @Aspect
 @Component
 public class ValidationAspect {
 
-    private static final String NOT_FOUND_MESSAGE = "Not found with id=";
-
-    private static void check(Object checkValue, int id) {
-        check(checkValue != null, id);
+    @Pointcut("@annotation(ru.net.arh.utils.aop.annotation.Throw404IfNullResult)")
+    private void throw404IfNullResult() {
     }
 
-    private static void check(boolean isOk, int id) {
-        if (!isOk) {
-            throw new NotFoundException(NOT_FOUND_MESSAGE + id);
+    @Pointcut("@annotation(ru.net.arh.utils.aop.annotation.Throw404IfFalseResult)")
+    private void throw404IfFalseResult() {
+    }
+
+    @Pointcut("@annotation(ru.net.arh.utils.aop.annotation.ThrowDuplicateValueForUniqueIndexIfNullResult)")
+    private void throwDuplicateValueForUniqueIndexIfNullResult() {
+    }
+
+    @Pointcut("@annotation(ru.net.arh.utils.aop.annotation.ThrowIfLocalDateParamBeforeToday)")
+    private void throwIfLocalDateParamBeforeToday() {
+    }
+
+    @Pointcut("@annotation(ru.net.arh.utils.aop.annotation.ThrowIfException)")
+    private void throwIfException() {
+    }
+
+    @Pointcut("@annotation(ru.net.arh.utils.aop.annotation.ThrowIfEmptyListReturned)")
+    private void throwIfEmptyListReturned() {
+    }
+
+    @AfterThrowing(value = "throwIfException() && @annotation(annotation)", throwing = "exception")
+    public void checkResult1(ThrowIfException annotation, Throwable exception) {
+        throw new ExceptionDuringSave(annotation.message(), exception);
+    }
+
+    @Before(value = "throwIfLocalDateParamBeforeToday() && @annotation(annotation) && args(date,..)")
+    public void checkDate(LocalDate date, ThrowIfLocalDateParamBeforeToday annotation) {
+        log.debug("checking date");
+        if (date.isBefore(LocalDate.now())) {
+            log.debug("throwing DateIsBeforeExection");
+            throw new DateIsBeforeExection(annotation.message());
         }
     }
 
-    @Pointcut("@annotation(ru.net.arh.utils.aop.annotation.NeedValidateReturnValueForNullOrFalse)")
-    private void methodsWithAnnotationNeedValidateReturnValueForNullOrFalse() {
+    @AfterReturning(value = "throwIfEmptyListReturned() && @annotation(annotation)", returning = "result")
+    public void checkResult2(List result, Throw404IfNullResult annotation) {
+        log.debug("checking result for null");
+        if (result.isEmpty()) {
+            log.debug("throwing Exception404");
+            throw new Exception404(annotation.message());
+        }
     }
 
-    @Pointcut("@annotation(ru.net.arh.utils.aop.annotation.NeedValidateReturnValueForNullOnCreate)")
-    private void methodsWithAnnotationNeedValidateReturnValueForNullOnCreate() {
-    }
-
-    @Pointcut("execution(boolean *(..))")
-    private void returnBoolean() {
-    }
-
-    @Pointcut("execution(ru.net.arh.model.mapped.AbstractBaseEntity *(..))")
-    private void returnEntity() {
-    }
-
-    @Pointcut("execution(* *(int))")
-    private void acceptInt() {
-    }
-
-    @Pointcut("execution(* *(ru.net.arh.model.mapped.AbstractBaseEntity*))")
-    private void acceptEntity() {
-    }
-
-    @AfterReturning(value = "methodsWithAnnotationNeedValidateReturnValueForNullOnCreate())", returning = "result")
-    public void checkCreateResult(JoinPoint jp, Object result) {
+    @AfterReturning(value = "throw404IfNullResult() && @annotation(annotation)", returning = "result")
+    public void checkResult1(Object result, Throw404IfNullResult annotation) {
+        log.debug("checking result for null");
         if (result == null) {
-            throw new CreateWithFoundKeyException("Creating with existed primary key");
+            log.debug("throwing Exception404");
+            throw new Exception404(annotation.message());
         }
     }
 
-    @AfterReturning(value = "acceptInt() && returnEntity() && methodsWithAnnotationNeedValidateReturnValueForNullOrFalse() && args(id)", returning = "result")
-    public void checkResultForNull(JoinPoint jp, Object result, int id) {
-        check(result, id);
+    @AfterReturning(value = "throw404IfFalseResult() && @annotation(annotation)", returning = "result")
+    public void checkResult2(boolean result, Throw404IfFalseResult annotation) {
+        log.debug("checking result for false");
+        if (result == false) {
+            log.debug("throwing Exception404");
+            throw new Exception404(annotation.message());
+        }
     }
 
-    @AfterReturning(value = "acceptEntity() && returnEntity() && methodsWithAnnotationNeedValidateReturnValueForNullOrFalse() && args(entity)", returning = "result")
-    public void checkResultForNullWithEntityParameter(JoinPoint jp, Object result, AbstractBaseEntity entity) {
-        check(result, entity.getId());
+    @AfterReturning(value = "throwDuplicateValueForUniqueIndexIfNullResult() && @annotation(annotation)", returning = "result")
+    public void checkResult3(Object result, ThrowDuplicateValueForUniqueIndexIfNullResult annotation) {
+        log.debug("checking result for null");
+        if (result == null) {
+            log.debug("throwing DuplicateValueForUniqueIndexException");
+            throw new DuplicateValueForUniqueIndexException(annotation.message());
+        }
     }
-
-    @AfterReturning(value = "acceptInt() && returnBoolean() && methodsWithAnnotationNeedValidateReturnValueForNullOrFalse() && args(id)", returning = "result")
-    public void checkResultForFalse(JoinPoint jp, boolean result, int id) {
-        check(result, id);
-    }
-
 }

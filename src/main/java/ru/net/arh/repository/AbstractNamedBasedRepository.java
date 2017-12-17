@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface AbstractNamedBasedRepository<T extends NamedBasedEntity> extends AbstractBasedRepository<T> {
 
-    List<T> findAllByFirstPartOfNameIgnoringCase(String firstPartOfName);
+    List<T> findAllByFirstPartOfNameIgnoringCase(final String firstPartOfName);
 
 }
