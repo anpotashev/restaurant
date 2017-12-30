@@ -25,6 +25,7 @@ import javax.validation.constraints.Size;
 @Access(AccessType.FIELD)
 public class NamedBasedEntity extends AbstractBaseEntity {
 
+    public static final String FIND_BY_FIRST_PART_OF_NAME_NAMED_QUERY = "NamedBasedQuery.findByFirstPartOfName";
     @NotNull
     @NotBlank
     @Size(min = 2, max = 100)

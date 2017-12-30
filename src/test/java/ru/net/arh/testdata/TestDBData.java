@@ -33,11 +33,11 @@ public class TestDBData {
     public static final Restaurant RESTAURANT4 = new Restaurant(START_RESTAURANT_ID + 3, "ресторан4");
     private static final int RESTAURANT_COUNT = 4;
 
-    public static final User USER = new User(START_SEQ + DISH_COUNT + RESTAURANT_COUNT, "User", "user@yandex.ru", "password", Role.ROLE_USER);
-    public static final User ADMIN = new User(START_SEQ + DISH_COUNT + RESTAURANT_COUNT + 1, "Admin", "admin@gmail.com", "admin", Role.ROLE_ADMIN);
-    public static final User USER_ADMIN = new User(START_SEQ + DISH_COUNT + RESTAURANT_COUNT + 2, "UserAdmin", "useradmin@hotmail.com", "useradmin_pwd", Role.ROLE_ADMIN, Role.ROLE_USER);
-    public static final User USER2 = new User(START_SEQ + DISH_COUNT + RESTAURANT_COUNT + 3, "User2", "user2@yandex.ru", "password2", Role.ROLE_USER);
-    public static final User USER3 = new User(START_SEQ + DISH_COUNT + RESTAURANT_COUNT + 4, "User3", "user3@yandex.ru", "password3", Role.ROLE_USER);
+    public static final User USER = new User(START_SEQ + DISH_COUNT + RESTAURANT_COUNT, "User", "password", Role.ROLE_USER);
+    public static final User ADMIN = new User(START_SEQ + DISH_COUNT + RESTAURANT_COUNT + 1, "Admin", "admin", Role.ROLE_ADMIN);
+    public static final User USER_ADMIN = new User(START_SEQ + DISH_COUNT + RESTAURANT_COUNT + 2, "useradmin@hotmail.com", "useradmin_pwd", Role.ROLE_ADMIN, Role.ROLE_USER);
+    public static final User USER2 = new User(START_SEQ + DISH_COUNT + RESTAURANT_COUNT + 3, "User2", "password2", Role.ROLE_USER);
+    public static final User USER3 = new User(START_SEQ + DISH_COUNT + RESTAURANT_COUNT + 4, "User3", "password3", Role.ROLE_USER);
 
 
     private static final int USER_COUNT = 5;

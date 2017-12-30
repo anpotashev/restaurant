@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ru.net.arh.service.BaseTest;
 import ru.net.arh.service.VoteService;
 import ru.net.arh.utils.VoteUtil;
-import ru.net.arh.utils.exception.DuplicateValueForUniqueIndexException;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -45,12 +44,12 @@ public class VoteServiceTest extends BaseTest {
         Assertions.assertThat(counts).isEqualTo(2);
     }
 
-    @Test
-    public void revoteWhenCanNotRevote() throws Exception {
-        VoteUtil.setCanRevoteUtilTime(LocalTime.MIN);
-        thrown.expect(DuplicateValueForUniqueIndexException.class);
-        service.save(VOTE_AFTER_CHANGE.getKey().getUser().getId(), VOTE_AFTER_CHANGE.getRestaurant().getId());
-    }
+//    @Test
+//    public void revoteWhenCanNotRevote() throws Exception {
+//        VoteUtil.setCanRevoteUtilTime(LocalTime.MIN);
+//        thrown.expect(DuplicateValueForUniqueIndexException.class);
+//        service.save(VOTE_AFTER_CHANGE.getKey().getUser().getId(), VOTE_AFTER_CHANGE.getRestaurant().getId());
+//    }
 
 
     @Test

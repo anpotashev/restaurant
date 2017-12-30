@@ -14,25 +14,13 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Entity
 @Table
-//        (name = "vote", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "date"}, name = "vote_unique_user_date_idx")})
-//@NamedQueries({
-//        @NamedQuery(name = "VOTE.findAllByDate", query = "select v from Vote v where v.key.date=:date order by v.restaurant.id, v.key.user.id")
-//})
-
 @NamedQueries({
-        @NamedQuery(name = Vote.DELETE_QUERY_NAME, query = "delete from Vote v where v.key.user.id = :userId and" +
-                " v.key.date = :date")
-        , @NamedQuery(name = Vote.GET_VOTES_COUNT_FOR_RESTAURANTS_AND_DATE_QUERY_NAME, query = "select count(v) from" +
+        @NamedQuery(name = Vote.GET_VOTES_COUNT_FOR_RESTAURANTS_AND_DATE_QUERY_NAME, query = "select count(v) from" +
         " Vote v where v.restaurant.id = :restaurantId and v.key.date = :date")
-//        , @NamedQuery(name = Dish.FIND_ALL_QUERY_NAME, query = "select d from Dish d order by d.id asc")
-//        , @NamedQuery(name = Dish.FIND_ALL_BY_FIRST_PART_OF_NAME_QUERY_NAME, query = "select d from Dish d " +
-//        "where lower(d.name) like lower(concat(:firstPartOfName, '%') ) order by d.id asc")
 })
-public class Vote implements DeleteNamedQueryExists {
+public class Vote {
 
     public static final String GET_VOTES_COUNT_FOR_RESTAURANTS_AND_DATE_QUERY_NAME = "Vote.getVotesCountForRestaurantInDate";
-    static final String DELETE_QUERY_NAME = "Vote.delete";
-//    public static final String VOTE_FIND_ALL_BY_DATE = "VOTE.findAllByDate";
 
     @EmbeddedId
     private VoteId key;

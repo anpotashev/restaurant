@@ -5,12 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.net.arh.model.Restaurant;
-import ru.net.arh.web.AbstractNamedController;
+import ru.net.arh.web.controller.AbstractNamedController;
 
 @Slf4j
 @RestController
-@RequestMapping("/restaurants")
+@RequestMapping(RootRestController.ROOT_URL + "/restaurants")
 public class RestaurantRestController extends AbstractNamedBasedRestController<Restaurant> {
+
 
     @Autowired
     private AbstractNamedController restaurantController;

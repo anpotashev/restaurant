@@ -12,7 +12,8 @@ import org.springframework.context.annotation.Import;
         "ru.net.arh.**.service"
         , "ru.net.arh.**.web"
         , "ru.net.arh.**.jpa"
-        , "ru.net.arh.utils.aop"
+        , "ru.net.arh.**.datajpa"
+        , "ru.net.arh.*.validation"
 })
 @Import({
         SpringDBConfig.class

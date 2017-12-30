@@ -2,7 +2,6 @@ package ru.net.arh.model.mapped;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import ru.net.arh.model.DeleteNamedQueryExists;
 
 import javax.persistence.*;
 
@@ -13,7 +12,7 @@ import javax.persistence.*;
 //persitence
 @MappedSuperclass
 @Access(AccessType.FIELD)
-public abstract class AbstractBaseEntity implements DeleteNamedQueryExists {
+public abstract class AbstractBaseEntity {
     public static final int START_SEQ = 100000;
 
     @Getter

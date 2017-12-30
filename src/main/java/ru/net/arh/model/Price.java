@@ -23,21 +23,21 @@ import java.time.LocalDate;
 @EqualsAndHashCode
 @Entity
 @Table
-@NamedQueries({
-        @NamedQuery(name = Price.DELETE_QUERY_NAME, query = "delete from Price p where p.restaurant.id = :restaurantId and" +
-                " p.dish.id = :dishId and p.date = :date")
-        , @NamedQuery(name = Price.GET_ALL_FOR_RESTAURANT_FOR_DATE_QUERY_NAME, query = "select p from Price p where" +
-        " p.restaurant.id = :restaurantId and p.date = :date order by p.dish.id asc")
-        , @NamedQuery(name = Price.CHECK_EXISTS, query = "select count(p) from Price p WHERE p.restaurant.id=:restaurantId" +
-        " AND p.dish.id=:dishId AND p.date=:date")
-
-//        , @NamedQuery(name = Dish.FIND_ALL_BY_FIRST_PART_OF_NAME_QUERY_NAME, query = "select d from Dish d " +
-//        "where lower(d.name) like lower(concat(:firstPartOfName, '%') ) order by d.id asc")
-})
+//@NamedQueries({
+//        @NamedQuery(name = Price.DELETE_QUERY_NAME, query = "delete from Price p where p.restaurant.id = :restaurantId and" +
+//                " p.dish.id = :dishId and p.date = :date")
+//        , @NamedQuery(name = Price.GET_ALL_FOR_RESTAURANT_FOR_DATE_QUERY_NAME, query = "select p from Price p where" +
+//        " p.restaurant.id = :restaurantId and p.date = :date order by p.dish.id asc")
+//        , @NamedQuery(name = Price.CHECK_EXISTS, query = "select count(p) from Price p WHERE p.restaurant.id=:restaurantId" +
+//        " AND p.dish.id=:dishId AND p.date=:date")
+//
+////        , @NamedQuery(name = Dish.FIND_ALL_BY_FIRST_PART_OF_NAME_QUERY_NAME, query = "select d from Dish d " +
+////        "where lower(d.name) like lower(concat(:firstPartOfName, '%') ) order by d.id asc")
+//})
 public class Price extends AbstractBaseEntity {
-    public static final String GET_ALL_FOR_RESTAURANT_FOR_DATE_QUERY_NAME = "Price.getPricesForRestaurantForDate";
-    static final String DELETE_QUERY_NAME = "Price.delete";
-    public static final String CHECK_EXISTS = "Price.check_exists";
+    //    public static final String GET_ALL_FOR_RESTAURANT_FOR_DATE_QUERY_NAME = "Price.getPricesForRestaurantForDate";
+//    static final String DELETE_QUERY_NAME = "Price.delete";
+//    public static final String CHECK_EXISTS = "Price.check_exists";
     private static final MathContext PRICE_ROUNT = new MathContext(4, RoundingMode.HALF_UP);
 
     @JsonIgnore

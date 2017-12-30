@@ -1,9 +1,11 @@
 package ru.net.arh.web.rest;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.net.arh.model.mapped.NamedBasedEntity;
-import ru.net.arh.web.AbstractNamedController;
+import ru.net.arh.utils.validation.exception.ValidationException;
+import ru.net.arh.web.controller.AbstractNamedController;
 
 import java.util.List;
 
@@ -34,16 +36,28 @@ public abstract class AbstractNamedBasedRestController<T extends NamedBasedEntit
 
     @PostMapping
     public ResponseEntity<Void> save(@RequestBody T entity) {
-        System.out.println(entity);
+        checkId(entity);
         getController().save(entity);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> save(@PathVariable("id") int id, @RequestBody T entity) {
-        entity.setId(id);
+        checkId(id, entity);
         getController().save(entity);
         return ResponseEntity.noContent().build();
+    }
+
+    private void checkId(T entity) {
+        if (entity.getId() != null) {
+            throw new ValidationException("id must be null", HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
+    private void checkId(int id, T entity) {
+        if (entity.getId() != id) {
+            throw new ValidationException("id must be " + id, HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 
 }

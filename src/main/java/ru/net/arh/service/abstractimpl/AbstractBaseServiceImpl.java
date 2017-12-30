@@ -1,10 +1,11 @@
 package ru.net.arh.service.abstractimpl;
 
+import org.springframework.http.HttpStatus;
 import ru.net.arh.model.mapped.AbstractBaseEntity;
 import ru.net.arh.repository.AbstractBasedRepository;
 import ru.net.arh.service.AbstractBaseService;
-import ru.net.arh.utils.aop.annotation.Throw404IfFalseResult;
-import ru.net.arh.utils.aop.annotation.Throw404IfNullResult;
+import ru.net.arh.utils.validation.annotation.CheckForFalseResult;
+import ru.net.arh.utils.validation.annotation.CheckForNullResult;
 
 import java.util.List;
 
@@ -12,25 +13,26 @@ public abstract class AbstractBaseServiceImpl<T extends AbstractBaseEntity> impl
 
     protected abstract AbstractBasedRepository<T> getRepository();
 
+    @CheckForNullResult(status = HttpStatus.NOT_FOUND)
     @Override
-    @Throw404IfNullResult
     public T get(int id) {
         return getRepository().find(id);
     }
 
+    @CheckForNullResult(status = HttpStatus.NOT_FOUND)
     @Override
-    @Throw404IfNullResult
-    public T update(final T value) {
-        return getRepository().update(value);
+    public T save(final T value) {
+        return getRepository().save(value);
     }
 
-    @Override
-    public T create(final T value) {
-        return getRepository().create(value);
-    }
+//    @CheckForNullResult(status = HttpStatus.NOT_FOUND)
+//    @Override
+//    public T create(final T value) {
+//        return getRepository().create(value);
+//    }
 
+    @CheckForFalseResult(status = HttpStatus.NOT_FOUND)
     @Override
-    @Throw404IfFalseResult
     public boolean delete(int id) {
         return getRepository().delete(id);
     }
@@ -39,4 +41,5 @@ public abstract class AbstractBaseServiceImpl<T extends AbstractBaseEntity> impl
     public List<T> getAll() {
         return getRepository().findAll();
     }
+
 }

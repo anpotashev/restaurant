@@ -13,8 +13,11 @@ public class MenuUtil {
 
     public static List<MenuItem> convertToMenuItems(List<Price> prices) {
         return prices.stream()
-                .map(price -> new MenuItem(price.getId(), price.getDish().getId(), price.getDish().getName(), price.getPrice().doubleValue()))
+                .map(MenuUtil::convertToMenuItem)
                 .collect(Collectors.toList());
     }
 
+    public static MenuItem convertToMenuItem(Price price) {
+        return new MenuItem(price.getId(), price.getDish().getId(), price.getDish().getName(), price.getPrice().doubleValue());
+    }
 }

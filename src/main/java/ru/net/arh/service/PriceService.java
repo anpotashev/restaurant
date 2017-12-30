@@ -1,5 +1,6 @@
 package ru.net.arh.service;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import ru.net.arh.model.Price;
 import ru.net.arh.to.menu.MenuItem;
 
@@ -8,17 +9,14 @@ import java.util.List;
 
 public interface PriceService {
 
-//    Price create( LocalDate date, int restaurantId, int dishId, double price);
-
-//    Price update(LocalDate date, int id, int restaurantId, int dishId, double price);
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     boolean delete(LocalDate date, int id);
+
 
     List<Price> getAllForRestorantInDay(int restaurantId, LocalDate date);
 
-    //two different methods for create and update, because of using arrays:
-    // If array menuItems contains values with null and not null "id" should be an exception.
-    List<Price> create(LocalDate date, int restaurantId, MenuItem... menuItems);
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    Price save(LocalDate date, int restaurantId, MenuItem menuItem);
 
-    List<Price> update(LocalDate date, int restaurantId, MenuItem... menuItems);
+    Price get(int priceId, int restaurantId, LocalDate date);
 }

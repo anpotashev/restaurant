@@ -29,7 +29,6 @@ public class SpringCacheConfig {
     @Bean
     public JCacheManagerFactoryBean jCacheCacheManagerFactoryBean() throws URISyntaxException, IOException {
         JCacheManagerFactoryBean factoryBean = new JCacheManagerFactoryBean();
-//        URI uri = new URI("file:///classpath:cache/ehcache.xml");
         URI uri = ClassLoader.getSystemResource("cache/ehcache.xml").toURI();
         factoryBean.setCacheManagerUri(uri);
         return factoryBean;

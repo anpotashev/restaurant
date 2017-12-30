@@ -5,13 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.net.arh.web.vote.VoteController;
+import ru.net.arh.web.controller.VoteController;
 
 import java.time.LocalDate;
 
 @Slf4j
 @RestController
-@RequestMapping("/restaurants/{restaurantId}/votes")
+@RequestMapping(RootRestController.ROOT_URL + "/restaurants/{restaurantId}/votes")
 public class VoteRestController {
 
     @Autowired

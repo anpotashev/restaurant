@@ -5,15 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.SQLDelete;
-import ru.net.arh.model.mapped.NamedBasedEntity;
+import org.springframework.security.core.userdetails.UserDetails;
+import ru.net.arh.model.mapped.AbstractBaseEntity;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Date;
 import java.util.EnumSet;
 import java.util.Set;
 
@@ -23,62 +20,61 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@SQLDelete(sql = "UPDATE User SET deleted=true WHERE id=? ")
+//@SQLDelete(sql = "UPDATE User SET deleted=true WHERE id=? ")
+//@Loader(namedQuery = Restaurant.FIND_BY_ID)
+//@Where(clause = "deleted=false")
 @Table
-        (name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "email", name = "users_unique_email_idx")})
-@NamedQueries({
-        @NamedQuery(name = User.DELETE_QUERY_NAME, query = "delete from User u where u.id = :id")
-        , @NamedQuery(name = User.FIND_ALL_QUERY_NAME, query = "select u from User u order by u.id asc")
-})
-public class User extends NamedBasedEntity {
-    static final String DELETE_QUERY_NAME = "User.delete";
-    static final String FIND_ALL_QUERY_NAME = "User.findAll";
+        (name = "users"
+//                , uniqueConstraints = {@UniqueConstraint(columnNames = "name", name = "users_unique_email_idx")}
+        )
+public class User extends AbstractBaseEntity implements UserDetails {
 
-    @Column(name = "email", nullable = false, unique = true)
-    @Email
+    @Column(name = "username", nullable = false)
     @NotBlank
-    @Size(max = 100)
-    private String email;
+    @Size(min = 2, max = 64)
+    private String username;
+
 
     @Column(name = "password", nullable = false)
     @NotBlank
     @Size(min = 5, max = 64)
     private String password;
 
-    @Column(name = "enabled", nullable = false, columnDefinition = "bool default true")
-    @NotNull
-    private boolean enabled = true;
-
-    @Column(name = "registered", columnDefinition = "timestamp default now()")
-    @NotNull
-    private Date registered = new Date();
-
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), foreignKey = @ForeignKey(name = "fk_user_user_role"))
     @Column(name = "role")
     @ElementCollection(fetch = FetchType.EAGER)
-    private Set<Role> roles;
+    private Set<Role> authorities;
 
-    public User(Integer id, String name, String email, String password, Role role, Role... roles) {
-        this(id, name, email, password, true, EnumSet.of(role, roles));
+    public User(Integer id, String name, String password, Role role, Role... roles) {
+        this(id, name, password, EnumSet.of(role, roles));
     }
 
-    public User(Integer id, String name, String email, String password, boolean b, EnumSet<Role> roles) {
-        super(id, name);
-        this.email = email;
+    public User(Integer id, String name, String password, EnumSet<Role> roles) {
+        super(id);
+        this.username = name;
         this.password = password;
-        this.enabled = enabled;
-        this.roles = roles;
+        this.authorities = roles;
     }
 
     @Override
-    public String toString() {
-        return super.toString() + "{" +
-                "email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", enabled=" + enabled +
-                ", registered=" + registered +
-                ", roles=" + roles +
-                '}';
+    public boolean isAccountNonExpired() {
+        return true;
     }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
 }

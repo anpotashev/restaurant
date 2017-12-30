@@ -24,16 +24,13 @@ CREATE TABLE restaurant (
 );
 
 CREATE TABLE users (
-  id         INT4              NOT NULL DEFAULT nextval('global_seq'),
-  name       VARCHAR(255),
-  email      VARCHAR(255)      NOT NULL,
-  enabled    BOOL DEFAULT TRUE NOT NULL,
-  password   VARCHAR(255)      NOT NULL,
-  registered TIMESTAMP                  DEFAULT now(),
+  id       INT4              NOT NULL DEFAULT nextval('global_seq'),
+  username VARCHAR(255),
+  password VARCHAR(60)       NOT NULL,
   PRIMARY KEY (id)
 );
-CREATE UNIQUE INDEX users_unique_email_idx
-  ON users (lower(email));
+CREATE UNIQUE INDEX users_unique_username_idx
+  ON users (lower(username));
 
 CREATE TABLE user_roles (
   user_id INT4         NOT NULL,
