@@ -9,11 +9,11 @@ import org.springframework.context.annotation.Import;
 @Slf4j
 @Configuration
 @ComponentScan({
-        "ru.net.arh.**.service"
+        "ru.net.arh.**.service.impl"
         , "ru.net.arh.**.web"
         , "ru.net.arh.**.jpa"
         , "ru.net.arh.**.datajpa"
-        , "ru.net.arh.*.validation"
+        , "ru.net.arh.**.validation"
 })
 @Import({
         SpringDBConfig.class

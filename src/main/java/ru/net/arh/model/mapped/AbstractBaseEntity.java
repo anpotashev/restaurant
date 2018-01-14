@@ -12,7 +12,7 @@ import javax.persistence.*;
 //persitence
 @MappedSuperclass
 @Access(AccessType.FIELD)
-public abstract class AbstractBaseEntity {
+public abstract class AbstractBaseEntity extends Object {
     public static final int START_SEQ = 100000;
 
     @Getter

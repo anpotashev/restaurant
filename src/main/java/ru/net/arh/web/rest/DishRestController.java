@@ -20,4 +20,9 @@ public class DishRestController extends AbstractNamedBasedRestController<Dish> {
     public AbstractNamedController<Dish> getController() {
         return dishController;
     }
+
+    @Override
+    public String getUri() {
+        return RootRestController.ROOT_URL + "/dishes";
+    }
 }

@@ -1,4 +1,4 @@
-package ru.net.arh.service.vote;
+package ru.net.arh.service.impl.vote;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -24,7 +24,7 @@ public class VoteRepositoryImpl implements VoteRepository {
     @Override
     @Transactional
     public Vote create(final int userId, final int restaurantId) {
-        if (checkExists(userId, LocalDate.now()))
+        if (find(userId, LocalDate.now()) != null)
             return null;
         return em.merge(getVote(userId, restaurantId, LocalDate.now()));
     }
@@ -32,12 +32,10 @@ public class VoteRepositoryImpl implements VoteRepository {
     @Override
     @Transactional
     public Vote updateOrCreate(final int userId, final int restaurantId) {
-        if (!checkExists(userId, LocalDate.now())) {
+        Vote vote = find(userId, LocalDate.now());
+        if (vote == null) {
             return em.merge(getVote(userId, restaurantId, LocalDate.now()));
         }
-        VoteId voteId = getVoteId(userId, LocalDate.now());
-
-        Vote vote = em.find(Vote.class, voteId);
         Restaurant restaurant = em.getReference(Restaurant.class, restaurantId);
         vote.setRestaurant(restaurant);
         em.persist(vote);
@@ -63,9 +61,9 @@ public class VoteRepositoryImpl implements VoteRepository {
         return new Vote(voteId, restaurant);
     }
 
-    private boolean checkExists(final int userId, final LocalDate date) {
+    private Vote find(int userId, LocalDate date) {
         VoteId voteId = getVoteId(userId, date);
-        return em.find(Vote.class, voteId) != null;
+        return em.find(Vote.class, voteId);
     }
 
 }

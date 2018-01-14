@@ -4,10 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterRegistration;
-import javax.servlet.ServletContext;
-
 @Slf4j
 public class AppInit extends AbstractAnnotationConfigDispatcherServletInitializer {
 
@@ -28,14 +24,16 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
         return new String[]{"/"};
     }
 
-    @Override
-    protected FilterRegistration.Dynamic registerServletFilter(ServletContext servletContext, Filter filter) {
-        return super.registerServletFilter(servletContext, filter);
-    }
+//    @Override
+//    protected FilterRegistration.Dynamic registerServletFilter(ServletContext servletContext, Filter filter) {
+//        return super.registerServletFilter(servletContext, filter);
+//    }
+//
+//    @Nullable
+//    @Override
+//    protected Filter[] getServletFilters() {
+//        return super.getServletFilters();
+//    }
 
-    @Nullable
-    @Override
-    protected Filter[] getServletFilters() {
-        return super.getServletFilters();
-    }
+
 }

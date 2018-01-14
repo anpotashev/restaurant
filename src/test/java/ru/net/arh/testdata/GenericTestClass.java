@@ -18,7 +18,11 @@ public class GenericTestClass<T> {
         assertMatch(actual, Arrays.asList(expected));
     }
 
-    public static void assertMatch(Iterable<Object> actual, Iterable<Object> expected) {
+//    public static void assertMatch(Iterable<Object> actual, Iterable<Object> expected) {
+//        assertThat(actual).usingFieldByFieldElementComparator().isEqualTo(expected);
+//    }
+
+    public static void assertMatch(Iterable actual, Iterable expected) {
         assertThat(actual).usingFieldByFieldElementComparator().isEqualTo(expected);
     }
 }

@@ -1,101 +1,29 @@
 package ru.net.arh.service.restaurant;
 
-import org.junit.Before;
-import org.junit.Test;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.net.arh.model.Restaurant;
-import ru.net.arh.service.AbstractNamedServiceTest;
+import ru.net.arh.service.AbstractNamedBasedServiceTest;
+import ru.net.arh.service.AbstractNamedService;
 import ru.net.arh.service.RestaurantService;
+import ru.net.arh.testdata.NamedBasedData;
 import ru.net.arh.testdata.RestaurantTestData;
 
-import java.util.List;
+@Slf4j
+public class RestaurantServiceTest extends AbstractNamedBasedServiceTest<Restaurant> {
 
-import static ru.net.arh.testdata.GenericTestClass.assertMatch;
-import static ru.net.arh.testdata.RestaurantTestData.NEW_RESTAURANT;
-import static ru.net.arh.testdata.RestaurantTestData.RESTAURANT_UPDATED;
-import static ru.net.arh.testdata.TestDBData.*;
-
-public class RestaurantServiceTest extends AbstractNamedServiceTest<Restaurant> {
-
+    @Autowired
+    private RestaurantTestData testData;
     @Autowired
     private RestaurantService service;
 
     @Override
-    protected RestaurantService getService() {
+    protected NamedBasedData<Restaurant> testData() {
+        return testData;
+    }
+
+    @Override
+    protected AbstractNamedService<Restaurant> service() {
         return service;
     }
-
-    @Before
-    public void setUp() throws Exception {
-    }
-
-    @Test
-    public void get() throws Exception {
-        Restaurant restaurant = getService().get(START_RESTAURANT_ID);
-        assertMatch(restaurant, RESTAURANT1);
-    }
-
-    @Test
-    public void create() throws Exception {
-        getService().save(RestaurantTestData.newRestaurant());
-        List actual = getService().getAll();
-        assertMatch(actual, RESTAURANT1, RESTAURANT2, RESTAURANT3, RESTAURANT4, NEW_RESTAURANT);
-    }
-
-    @Test
-    public void createWithEmptyName() throws Exception {
-        Restaurant restaurant = RestaurantTestData.newRestaurant();
-        restaurant.setName("");
-        getService().save(restaurant);
-    }
-
-    @Test
-    public void update() throws Exception {
-        Restaurant restaurant = new Restaurant(RESTAURANT_UPDATED.getId(), RESTAURANT_UPDATED.getName());
-        getService().save(restaurant);
-        List actual = getService().getAll();
-        assertMatch(actual, RESTAURANT_UPDATED, RESTAURANT2, RESTAURANT3, RESTAURANT4);
-    }
-//
-//    @Test
-//    public void updateWithWrongId() throws Exception {
-//        Restaurant restaurant = new Restaurant(-1, "restaurant with wrong id");
-//        thrown.expect(Exception404.class);
-//        getService().update(restaurant);
-//    }
-
-    @Test
-    public void updateWithEmptyName() throws Exception {
-        Restaurant restaurant = getService().get(RESTAURANT1.getId());
-        restaurant.setName("");
-        getService().save(restaurant);
-        throw new RuntimeException("not working validation yet");
-    }
-
-    @Test
-    public void delete() throws Exception {
-        getService().delete(START_RESTAURANT_ID);
-        List actual = getService().getAll();
-        assertMatch(actual, RESTAURANT2, RESTAURANT3, RESTAURANT4);
-    }
-
-//    @Test
-//    public void deleteWithWrongId() throws Exception {
-//        thrown.expect(Exception404.class);
-//        getService().delete(-1);
-//    }
-
-    @Test
-    public void getAll() throws Exception {
-        List actual = getService().getAll();
-        assertMatch(actual, RESTAURANT1, RESTAURANT2, RESTAURANT3, RESTAURANT4);
-    }
-
-    @Test
-    public void findStaringWithNameIgnoreCase() throws Exception {
-        List actual = getService().findAllByFirstPartOfNameIgnoringCase("ресторан");
-        assertMatch(actual, RESTAURANT1, RESTAURANT2, RESTAURANT3, RESTAURANT4);
-    }
-
-
 }

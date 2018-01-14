@@ -12,7 +12,6 @@ public interface PriceService {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     boolean delete(LocalDate date, int id);
 
-
     List<Price> getAllForRestorantInDay(int restaurantId, LocalDate date);
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")

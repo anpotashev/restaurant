@@ -30,6 +30,9 @@ public class PriceRepositoryImpl implements PriceRepository {
     @Override
     @Transactional
     public Price save(LocalDate date, int restaurantId, MenuItem menuItem) {
+        if (menuItem.getId() != null && get(menuItem.getId(), restaurantId, date) == null) {
+            return null;
+        }
         Price price = getPrice(date, restaurantId, menuItem);
         return priceRepository.save(price);
     }
@@ -52,7 +55,7 @@ public class PriceRepositoryImpl implements PriceRepository {
 
     @Override
     public List<Price> getAllForRestorantInDay(final int restaurantId, final LocalDate date) {
-        return priceRepository.getAllByRestaurantIdAndDate(restaurantId, date);
+        return priceRepository.getAllByRestaurantIdAndDateOrderByDishId(restaurantId, date);
     }
 
     private Price getPrice(final Integer id, final int restaurantId, final int dishId, final LocalDate date, final double price) {

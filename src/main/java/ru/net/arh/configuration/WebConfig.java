@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @ComponentScan(value = "ru.net.arh.web")
 @EnableWebSecurity
 public class WebConfig implements WebMvcConfigurer {
-
+//
 //    @Override
 //    public void addResourceHandlers(ResourceHandlerRegistry registry) {
 //        registry.addResourceHandler("/resources/**").addResourceLocations("/WEB-INF/resources/");

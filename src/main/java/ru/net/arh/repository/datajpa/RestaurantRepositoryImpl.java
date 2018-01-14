@@ -26,26 +26,11 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
     }
 
     @Override
-    public Restaurant findOne(int id) {
-        return restaurantRepository.getOne(id);
-    }
-
-    @Override
-    public Restaurant createOrUpdate(Restaurant value) {
+    public Restaurant save(Restaurant value) {
+        if (!value.isNew() && find(value.getId()) == null)
+            return null;
         return restaurantRepository.save(value);
     }
-
-//    @Override
-//    public Restaurant save(Restaurant value) {
-//        if (!value.isNew() && restaurantRepository.getOne(value.getId())==null)
-//            return null;
-//        return restaurantRepository.save(value);
-//    }
-
-//    @Override
-//    public Restaurant update(Restaurant value) {
-//        return restaurantRepository.save(value);
-//    }
 
     @Override
     public boolean delete(int id) {

@@ -1,4 +1,4 @@
-package ru.net.arh.service.abstractimpl;
+package ru.net.arh.service.impl.abstractimpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

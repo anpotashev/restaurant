@@ -5,7 +5,8 @@ DELETE FROM dish;
 DELETE FROM restaurant;
 DELETE FROM users;
 
-ALTER SEQUENCE global_seq RESTART WITH 100000;
+ALTER SEQUENCE global_seq
+RESTART WITH 100000;
 --100000
 INSERT INTO dish (name) VALUES
   ('блюдо1'),
@@ -20,7 +21,7 @@ INSERT INTO restaurant (name) VALUES
   ('Рресторан4');
 --100008
 INSERT INTO users (username, password) VALUES
-  ('User', '$2a$10$WFjLUAwPEQy30ftAmkrl8.G/b/KFTiKwFujU8nJbwImfFP5BKkUt2'), --password='password'
+  ('User', '$2a$10$WFjLUAwPEQy30ftAmkrl8.G/b/KFTiKwFujU8nJbwImfFP5BKkUt2'),
   ('Admin', '$2a$10$WFjLUAwPEQy30ftAmkrl8.G/b/KFTiKwFujU8nJbwImfFP5BKkUt2'),
   ('UserAdmin', '$2a$10$WFjLUAwPEQy30ftAmkrl8.G/b/KFTiKwFujU8nJbwImfFP5BKkUt2'),
   ('User2', '$2a$10$WFjLUAwPEQy30ftAmkrl8.G/b/KFTiKwFujU8nJbwImfFP5BKkUt2'),

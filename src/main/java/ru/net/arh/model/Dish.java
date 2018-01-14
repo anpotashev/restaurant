@@ -4,6 +4,7 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.Loader;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import ru.net.arh.model.mapped.NamedBasedEntity;
 
 import javax.persistence.Entity;
@@ -17,6 +18,7 @@ import javax.persistence.Table;
 @Table(name = "dish")
 @SQLDelete(sql = "UPDATE Dish SET deleted=true WHERE id=? ")
 @Loader(namedQuery = Dish.FIND_BY_ID)
+@Where(clause = "deleted=false")
 @NamedQueries({
         @NamedQuery(name = Dish.FIND_BY_ID, query = "SELECT d FROM Dish d WHERE d.id=?1 AND d.deleted=false")
 })

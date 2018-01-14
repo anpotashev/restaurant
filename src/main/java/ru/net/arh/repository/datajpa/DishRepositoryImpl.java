@@ -27,25 +27,10 @@ public class DishRepositoryImpl implements DishRepository {
 
     @Override
     public Dish save(Dish value) {
-        if (!value.isNew() && dishRepository.getOne(value.getId()) == null)
+        if (!value.isNew() && find(value.getId()) == null)
             return null;
         return dishRepository.save(value);
     }
-
-    @Override
-    public Dish findOne(int id) {
-        return dishRepository.getOne(id);
-    }
-
-    @Override
-    public Dish createOrUpdate(Dish value) {
-        return dishRepository.save(value);
-    }
-
-//    @Override
-//    public Dish update(Dish value) {
-//        return dishRepository.save(value);
-//    }
 
     @Override
     public boolean delete(int id) {

@@ -20,4 +20,9 @@ public class RestaurantRestController extends AbstractNamedBasedRestController<R
     public AbstractNamedController<Restaurant> getController() {
         return restaurantController;
     }
+
+    @Override
+    public String getUri() {
+        return RootRestController.ROOT_URL + "/restaurants";
+    }
 }

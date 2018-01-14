@@ -11,7 +11,7 @@ public interface DataJpaPriceRepository extends JpaRepository<Price, Integer> {
 
     int deleteById(int id);
 
-    List<Price> getAllByRestaurantIdAndDate(int restaurantId, LocalDate date);
+    List<Price> getAllByRestaurantIdAndDateOrderByDishId(int restaurantId, LocalDate date);
 
     Optional<Price> getByIdAndRestaurantIdAndDate(int id, int restaurantId, LocalDate date);
 }

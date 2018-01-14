@@ -1,4 +1,4 @@
-package ru.net.arh.service;
+package ru.net.arh.service.security.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
