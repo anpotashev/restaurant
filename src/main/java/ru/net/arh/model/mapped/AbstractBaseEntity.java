@@ -33,12 +33,4 @@ public abstract class AbstractBaseEntity extends Object {
         return id == null;
     }
 
-
-//    public static String getDeleteNamedQueryName() {
-//        throw new UnsupportedOperationException("must be overriding on subclasses");
-//    }
-//
-//    public static String getFindAllNamedQueryName() {
-//        throw new UnsupportedOperationException("must be overriding on subclasses");
-//    }
 }

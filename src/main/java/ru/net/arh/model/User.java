@@ -20,13 +20,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-//@SQLDelete(sql = "UPDATE User SET deleted=true WHERE id=? ")
-//@Loader(namedQuery = Restaurant.FIND_BY_ID)
-//@Where(clause = "deleted=false")
-@Table
-        (name = "users"
-//                , uniqueConstraints = {@UniqueConstraint(columnNames = "name", name = "users_unique_email_idx")}
-        )
+@Table(name = "users")
 public class User extends AbstractBaseEntity implements UserDetails {
 
     @Column(name = "username", nullable = false)

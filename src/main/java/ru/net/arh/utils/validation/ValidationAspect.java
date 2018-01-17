@@ -34,7 +34,9 @@ public class ValidationAspect {
 
     @AfterThrowing(value = "checkForException() && @annotation(annotation)", throwing = "exception")
     public void checkResult1(CheckForException annotation, Throwable exception) throws IllegalAccessException, InstantiationException {
-        throw new ValidationException(annotation.message(), exception, annotation.status());
+        if (exception.getClass() != ValidationException.class) {
+            throw new ValidationException(annotation.message(), exception, annotation.status());
+        }
     }
 
     @Before(value = "checkForLocalDateParamBeforeToday() && @annotation(annotation) && args(date,..)")

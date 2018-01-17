@@ -10,10 +10,10 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @EqualsAndHashCode
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table
 @NamedQueries({
         @NamedQuery(name = Vote.GET_VOTES_COUNT_FOR_RESTAURANTS_AND_DATE_QUERY_NAME, query = "select count(v) from" +
         " Vote v where v.restaurant.id = :restaurantId and v.key.date = :date")
@@ -35,13 +35,5 @@ public class Vote {
         this.restaurant = restaurant;
     }
 
-    @Override
-    public String toString() {
-        return "Vote{" +
-                "userId=" + key.getUser().getId() +
-                ", date=" + key.getDate() +
-                ", restaurantId=" + restaurant.getId() +
-                '}';
-    }
 
 }

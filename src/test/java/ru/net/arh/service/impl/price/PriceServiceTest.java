@@ -83,7 +83,7 @@ public class PriceServiceTest extends AbstractServiceTest {
     @Test
     @WithMockUser(authorities = {"ROLE_ADMIN"})
     public void delete() throws Exception {
-        priceService.delete(LocalDate.now(), PRICE1.getId());
+        priceService.delete(LocalDate.now(), PRICE1.getId(), PRICE1.getRestaurant().getId());
         List prices = priceService.getAllForRestorantInDay(PRICE1.getRestaurant().getId(), LocalDate.now());
         assertMatch(prices, PRICE2, PRICE3);
     }
@@ -92,14 +92,14 @@ public class PriceServiceTest extends AbstractServiceTest {
     @WithMockUser(authorities = {"ROLE_ADMIN"})
     public void deleteForOldDate() throws Exception {
         thrown.expect(ValidationException.class);
-        priceService.delete(LocalDate.now().minusDays(1), START_YESTERDAY_PRICE_ID);
+        priceService.delete(LocalDate.now().minusDays(1), START_YESTERDAY_PRICE_ID, RESTAURANT1.getId());
     }
 
     @Test
     @WithMockUser(authorities = {"ROLE_ADMIN"})
     public void deleteWithWrongKey() throws Exception {
         thrown.expect(ValidationException.class);
-        priceService.delete(LocalDate.now(), -1);
+        priceService.delete(LocalDate.now(), -1, RESTAURANT1.getId());
     }
 
     @Test

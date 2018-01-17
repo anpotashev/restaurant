@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Import;
 })
 @Import({
         SpringDBConfig.class
-//        , SpringCacheConfig.class
+        , SpringCacheConfig.class
 })
 @EnableAspectJAutoProxy
 public class SpringConfig {

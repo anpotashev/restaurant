@@ -39,12 +39,12 @@ public class PriceServiceImpl implements PriceService {
         return repository.get(priceId, restaurantId, date);
     }
 
-    @CacheEvict("menu")
+    @CacheEvict(value = "menu", key = "#date")
     @CheckForFalseResult(status = HttpStatus.NOT_FOUND)
-    @CheckForLocalDateParamBeforeToday(message = "You cannot delete price in past", status = HttpStatus.NOT_ACCEPTABLE)
+    @CheckForLocalDateParamBeforeToday(message = "You cannot delete price in the past", status = HttpStatus.NOT_ACCEPTABLE)
     @Override
-    public boolean delete(LocalDate date, int id) {
-        return repository.delete(id);
+    public boolean delete(LocalDate date, int id, int restaurantId) {
+        return repository.delete(date, id, restaurantId);
     }
 
     @Cacheable("menu")

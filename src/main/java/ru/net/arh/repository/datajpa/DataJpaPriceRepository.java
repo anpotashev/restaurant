@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface DataJpaPriceRepository extends JpaRepository<Price, Integer> {
 
-    int deleteById(int id);
+    int deleteByIdAndDateAndRestaurantId(int id, LocalDate date, int restaurantId);
 
     List<Price> getAllByRestaurantIdAndDateOrderByDishId(int restaurantId, LocalDate date);
 

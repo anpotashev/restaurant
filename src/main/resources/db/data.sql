@@ -31,7 +31,10 @@ INSERT INTO user_roles (role, user_id) VALUES
   ('ROLE_USER', 100008),
   ('ROLE_ADMIN', 100009),
   ('ROLE_USER', 100010),
-  ('ROLE_ADMIN', 100010);
+  ('ROLE_ADMIN', 100010),
+  ('ROLE_USER', 100011),
+  ('ROLE_USER', 100012);
+
 INSERT INTO price (restaurant_id, dish_id, date, price) VALUES
   (100004, 100001, CURRENT_DATE, 10.11),
   (100004, 100002, CURRENT_DATE, 10.12),

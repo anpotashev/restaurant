@@ -48,8 +48,8 @@ public class PriceRepositoryImpl implements PriceRepository {
 
     @Override
     @Transactional
-    public boolean delete(final int id) {
-        return priceRepository.deleteById(id) > 0;
+    public boolean delete(LocalDate date, final int id, int restaurantId) {
+        return priceRepository.deleteByIdAndDateAndRestaurantId(id, date, restaurantId) > 0;
     }
 
 

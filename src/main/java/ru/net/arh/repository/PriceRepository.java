@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PriceRepository {
 
-    boolean delete(final int id);
+    boolean delete(LocalDate date, final int id, int restaurantId);
 
     List<Price> getAllForRestorantInDay(final int restaurantId, final LocalDate date);
 

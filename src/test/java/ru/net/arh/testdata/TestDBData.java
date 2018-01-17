@@ -70,10 +70,14 @@ public class TestDBData {
 //        PRICES.computeIfAbsent(restaurant, k -> new LinkedList<>()).add(price1);
 //    }
 
+
     public static final Vote VOTE1 = new Vote(USER, LocalDate.now(), RESTAURANT1);
     public static final Vote VOTE2 = new Vote(USER_ADMIN, LocalDate.now(), RESTAURANT2);
     public static final Vote VOTE3 = new Vote(USER2, LocalDate.now(), RESTAURANT1);
     public static final Vote VOTE1_YESTERDAY = new Vote(USER, LocalDate.now().minusDays(1), RESTAURANT1);
     public static final Vote VOTE2_YESTERDAY = new Vote(USER_ADMIN, LocalDate.now().minusDays(1), RESTAURANT2);
+
+    public static final int TODAY_RESTAURANT1_COUNT = 2;
+    public static final int YESTERDAY_RESTAURANT1_COUNT = 1;
 
 }

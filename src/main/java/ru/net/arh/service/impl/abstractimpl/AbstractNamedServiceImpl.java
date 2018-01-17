@@ -1,6 +1,7 @@
 package ru.net.arh.service.impl.abstractimpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ru.net.arh.model.Dish;
 import ru.net.arh.model.Restaurant;
@@ -20,6 +21,7 @@ public abstract class AbstractNamedServiceImpl<T extends NamedBasedEntity> exten
     protected abstract AbstractNamedBasedRepository<T> getRepository();
 
     @Override
+    @Cacheable(cacheNames = "basecache", key = "{#root.targetClass.name, #root.method.name, #firstPartOfName}")
     public List<T> findAllByFirstPartOfNameIgnoringCase(String firstPartOfName) {
         return getRepository().findAllByFirstPartOfNameIgnoringCase(firstPartOfName);
     }
@@ -47,4 +49,5 @@ public abstract class AbstractNamedServiceImpl<T extends NamedBasedEntity> exten
             return repository;
         }
     }
+
 }

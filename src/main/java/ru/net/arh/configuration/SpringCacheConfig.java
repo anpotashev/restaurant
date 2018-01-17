@@ -8,10 +8,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.ClassPathResource;
 
 import javax.cache.CacheManager;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
 
 @Configuration
@@ -29,8 +29,12 @@ public class SpringCacheConfig {
     @Bean
     public JCacheManagerFactoryBean jCacheCacheManagerFactoryBean() throws URISyntaxException, IOException {
         JCacheManagerFactoryBean factoryBean = new JCacheManagerFactoryBean();
-        URI uri = ClassLoader.getSystemResource("cache/ehcache.xml").toURI();
-        factoryBean.setCacheManagerUri(uri);
+
+        factoryBean.setBeanClassLoader(getClass().getClassLoader());
+        factoryBean.setCacheManagerUri(new ClassPathResource(env.getProperty("ehcache.uri")).getURI());
+
+//        URI uri = env.getProperty("ehcache.uri", URI.class);
+//        factoryBean.setCacheManagerUri(uri);
         return factoryBean;
     }
 }
