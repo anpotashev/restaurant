@@ -14,8 +14,6 @@ import ru.net.arh.configuration.SpringTestConfig;
         , SpringSecurityConfig.class
         , SpringTestConfig.class
 })
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@Sql(scripts = "classpath:db/data.sql", config = @SqlConfig(encoding = "UTF-8"))
 public abstract class AbstractServiceTest extends BaseTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();

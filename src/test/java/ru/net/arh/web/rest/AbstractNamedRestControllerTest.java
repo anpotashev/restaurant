@@ -5,7 +5,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import ru.net.arh.model.mapped.NamedBasedEntity;
 import ru.net.arh.testdata.NamedBasedData;
-import ru.net.arh.web.AbstractRestTestClass;
+import ru.net.arh.web.AbstractRestTest;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -13,7 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static ru.net.arh.web.JsonUtil.assertThat;
 import static ru.net.arh.web.JsonUtil.writeValue;
 
-public abstract class AbstractNamedRestControllerTest<T extends NamedBasedEntity> extends AbstractRestTestClass {
+public abstract class AbstractNamedRestControllerTest<T extends NamedBasedEntity> extends AbstractRestTest {
 
     protected abstract NamedBasedData<T> getTestData();
 

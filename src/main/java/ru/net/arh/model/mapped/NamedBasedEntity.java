@@ -25,11 +25,11 @@ public class NamedBasedEntity extends AbstractBaseEntity {
     @NotNull
     @Size(min = 2, max = 100)
     @Column(name = "name")
-    protected String name;
+    private String name;
 
     @JsonIgnore
     @Column(name = "deleted")
-    boolean deleted;
+    private boolean deleted;
 
     public NamedBasedEntity(Integer id, String name) {
         super(id);

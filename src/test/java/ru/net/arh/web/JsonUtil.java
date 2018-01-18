@@ -18,14 +18,6 @@ public class JsonUtil {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
-    static {
-//        MAPPER.registerModule(new JavaTimeModule());
-//        MAPPER.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-//        MAPPER.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
-//        MAPPER.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-//        MAPPER.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-    }
-
     public static String writeValue(Object value) throws JsonProcessingException {
         return MAPPER.writeValueAsString(value);
     }
@@ -41,9 +33,5 @@ public class JsonUtil {
     public static ResultMatcher assertThat(List expected) throws JsonProcessingException {
         return content().json(writeValue(expected));
     }
-
-//    public static ResultMatcher assertThat(Object[] expected) throws JsonProcessingException {
-//        return assertThat()
-//    }
 
 }

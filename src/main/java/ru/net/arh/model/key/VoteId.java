@@ -21,10 +21,10 @@ public class VoteId implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @NotNull
     @JoinColumn(name = "user_id")
-    User user;
+    private User user;
 
-    @Column(name = "date")
+    //    @Column(name = "date")
     @NotNull
-    LocalDate date;
+    private LocalDate date;
 
 }

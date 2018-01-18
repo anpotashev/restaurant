@@ -34,9 +34,8 @@ import static ru.net.arh.web.JsonUtil.assertThat;
 })
 @WebAppConfiguration
 @EnableWebSecurity
-public abstract class AbstractRestTestClass extends BaseTest {
+public abstract class AbstractRestTest extends BaseTest {
 
-//    protected static final String BASE_REST_URI = RootRestController.ROOT_URL;
 
     private static final CharacterEncodingFilter CHARACTER_ENCODING_FILTER = new CharacterEncodingFilter();
 

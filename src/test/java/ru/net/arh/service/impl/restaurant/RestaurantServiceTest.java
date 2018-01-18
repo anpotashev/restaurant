@@ -1,4 +1,4 @@
-package ru.net.arh.service.restaurant;
+package ru.net.arh.service.impl.restaurant;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

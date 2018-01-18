@@ -7,7 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import ru.net.arh.to.menu.MenuItem;
 import ru.net.arh.utils.MenuUtil;
-import ru.net.arh.web.AbstractRestTestClass;
+import ru.net.arh.web.AbstractRestTest;
 
 import java.time.LocalDate;
 
@@ -23,7 +23,7 @@ import static ru.net.arh.web.JsonUtil.writeValue;
 import static ru.net.arh.web.rest.RootRest.ROOT_URL;
 
 @Slf4j
-public class PriceRestControllerTest extends AbstractRestTestClass {
+public class PriceRestControllerTest extends AbstractRestTest {
     @Override
     protected String getUri() {
         return ROOT_URL + "/restaurants/" + RESTAURANT1.getId() + "/prices";

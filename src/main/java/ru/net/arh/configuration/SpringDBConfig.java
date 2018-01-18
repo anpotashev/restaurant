@@ -31,7 +31,7 @@ import static org.hibernate.cfg.AvailableSettings.*;
 @EnableJpaRepositories(basePackages = {"ru.net.arh.repository.datajpa"})
 public class SpringDBConfig {
     @Autowired
-    Environment env;
+    private Environment env;
 
     @Value("${SCHEME_SQL}")
     private Resource schemaScript;

@@ -1,13 +1,12 @@
 package ru.net.arh.web.rest;
 
-import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import ru.net.arh.utils.VoteUtil;
-import ru.net.arh.web.AbstractRestTestClass;
+import ru.net.arh.web.AbstractRestTest;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -21,9 +20,7 @@ import static ru.net.arh.testdata.TestDBData.*;
 import static ru.net.arh.web.JsonUtil.assertThat;
 import static ru.net.arh.web.rest.RootRest.ROOT_URL;
 
-@Slf4j
-
-public class VoteRestControllerTest extends AbstractRestTestClass {
+public class VoteRestControllerTest extends AbstractRestTest {
 
     @Override
     protected String getUri() {
@@ -36,31 +33,31 @@ public class VoteRestControllerTest extends AbstractRestTestClass {
     }
 
     @Test
-    @WithUserDetails(value = "User3", userDetailsServiceBeanName = "customUserDetailsService")
+    @WithUserDetails(value = "User3", userDetailsServiceBeanName = "userService")
     public void vote() throws Exception {
         mockMvc.perform(post(getUri()))
                 .andDo(print())
-                .andExpect(status().isNoContent());
+                .andExpect(status().isNoContent())
         ;
     }
 
     @Test
-    @WithUserDetails(value = "User", userDetailsServiceBeanName = "customUserDetailsService")
+    @WithUserDetails(value = "User", userDetailsServiceBeanName = "userService")
     public void revoteWhenCanRevote() throws Exception {
         VoteUtil.setCanRevoteUtilTime(LocalTime.MAX);
         mockMvc.perform(post(getUri()))
                 .andDo(print())
-                .andExpect(status().isNoContent());
+                .andExpect(status().isNoContent())
         ;
     }
 
     @Test
-    @WithUserDetails(value = "User", userDetailsServiceBeanName = "customUserDetailsService")
+    @WithUserDetails(value = "User", userDetailsServiceBeanName = "userService")
     public void revoteWhenCannotRevote() throws Exception {
         VoteUtil.setCanRevoteUtilTime(LocalTime.MIN);
         mockMvc.perform(post(getUri()))
                 .andDo(print())
-                .andExpect(status().isNotModified());
+                .andExpect(status().isNotModified())
         ;
     }
 
@@ -69,16 +66,17 @@ public class VoteRestControllerTest extends AbstractRestTestClass {
     public void voteAnonimously() throws Exception {
         mockMvc.perform(post(getUri()))
                 .andDo(print())
-                .andExpect(status().isUnauthorized());
+                .andExpect(status().isUnauthorized())
         ;
     }
 
     @Test
-    @WithUserDetails(value = "Admin", userDetailsServiceBeanName = "customUserDetailsService")
+    @WithUserDetails(value = "Admin", userDetailsServiceBeanName = "userService")
     public void voteWihoutRole() throws Exception {
         mockMvc.perform(post(getUri()))
                 .andDo(print())
-                .andExpect(status().isForbidden());
+                .andExpect(status().isForbidden())
+        ;
     }
 
     @Test
@@ -88,7 +86,6 @@ public class VoteRestControllerTest extends AbstractRestTestClass {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(assertThat(TODAY_RESTAURANT1_COUNT))
-
         ;
     }
 

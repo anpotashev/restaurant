@@ -11,7 +11,6 @@ import java.time.LocalTime;
 @Slf4j
 public class VoteUtil {
 
-    //    @Getter
     @Setter //Just for tests
     private static LocalTime canRevoteUtilTime = LocalTime.of(11, 0);
 
