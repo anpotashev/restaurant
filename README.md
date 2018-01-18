@@ -21,41 +21,43 @@ Tables:
 * Dish
     - id (pk)
     - name
+    - deleted
 * Restaurant
     - id (pk)
     - name
-* Price
-    - restaurant_id (pk)
-    - dish_id (pk)
-    - start_date (pk)
+    - deleted
+* Price 
+    - id
+    - restaurant_id (*)
+    - dish_id (*)
+    - date (*)
     - price
-* User
+* Users
     - id (pk)
-    - email
+    - name
     - password
-    - enables
-    - registred
 * Vote
     - date (pk)
     - user_id (pk)
     - restaurant_id
-* Role
+* User_roles
     - user_id (pk)
     - role (pk)
+* - уникальный индекс в таблице
 
 REST:
 
-|uri | get | post | put | delete 
-|:---|:--- |:---  |:--- | :---  
-| restaurants| list all | - | new | -
-| restaurants/{r_id}/votes| list all | - | (re)vote | -
-| restaurants/{r_id}/votes/{date}| list all | - | - | -
-| restaurants/{r_id} | list | edit | - | delete
-| restaurants/{r_id}/prices/{date} | - | - | - |
-| restaurants/{r_id}/prices/{date} | - | - | - | 
-| restaurants/{r_id}/prices/{date}/dishes/{d_id}} | list | edit | new | delete
-| dishes | list all | - | new | -
-| dishes/{d_id} | list | edit | - | delete
+| Object | uri | get | post | put | delete 
+|:---|:---|:--- |:---  |:--- | :---  
+| Restaurant | restaurants| list all | new | - | -
+| Restaurant | restaurants/{r_id} | list | - | edit | delete
+| Dish | dishes| list all | new | - | -
+| Dish | dishes/{r_id} | list | - | edit | delete
+| MenuItem | restaurants/{r_id}/prices/ | list all | - | - |
+| MenuItem | restaurants/{r_id}/prices/{date} | - | - | - |
+| MenuItem | restaurants/{r_id}/prices/{date}/{id} | list | - | edit | delete
+| Vote | restaurants/{r_id}/votes| get count | (re)vote | - | -
+| Vote | restaurants/{r_id}/votes/{date}| get count | - | - | -
 
 
 
