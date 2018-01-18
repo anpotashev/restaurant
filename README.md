@@ -54,11 +54,12 @@ REST:
 | Dish | dishes| list all | new | - | -
 | Dish | dishes/{r_id} | list | - | edit | delete
 | MenuItem | restaurants/{r_id}/prices/ | list all | - | - |
-| MenuItem | restaurants/{r_id}/prices/{date} | - | - | - |
+| MenuItem | restaurants/{r_id}/prices/{date} | list all | new | - |
 | MenuItem | restaurants/{r_id}/prices/{date}/{id} | list | - | edit | delete
 | Vote | restaurants/{r_id}/votes| get count | (re)vote | - | -
 | Vote | restaurants/{r_id}/votes/{date}| get count | - | - | -
 
+Получения голосов не было в ТЗ. Добавлено, для упрощения тестирования через curl.
 
 
 ***Примеры curl***
@@ -170,8 +171,9 @@ $RESTAURANT/rest/dishes
 *Справочник на дату для конкретного ресторана:*
 
 Текущая дата:
-
+```
 curl "$RESTAURANT/rest/restaurants/100004/prices/" |json_pp
+```
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100   210    0   210    0     0  20272      0 --:--:-- --:--:-- --:--:-- 21000
@@ -199,6 +201,7 @@ curl "$RESTAURANT/rest/restaurants/100004/prices/" |json_pp
 Произвольная дата:
 
 curl "$RESTAURANT/rest/restaurants/100004/prices/2018-01-18" |json_pp
+
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100   205    0   205    0     0   4861      0 --:--:-- --:--:-- --:--:--  5000
@@ -226,6 +229,7 @@ curl "$RESTAURANT/rest/restaurants/100004/prices/2018-01-18" |json_pp
 *Конкретный пункт меню:*
 
 curl "$RESTAURANT/rest/restaurants/100004/prices/2018-01-18/100019" |json_pp
+  
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100    67    0    67    0     0   2739      0 --:--:-- --:--:-- --:--:--  2791
@@ -242,6 +246,7 @@ curl "$RESTAURANT/rest/restaurants/100004/prices/2018-01-18/100019" |json_pp
 Дата должна быть не раньше текущей.
 
 curl -i --user admin:password -H "Content-Type: application/json" -X POST -d '{"dishId":100003,"price":"100.02"}' "$RESTAURANT/rest/restaurants/100006/prices/2018-01-19"
+
 HTTP/1.1 201
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
@@ -256,6 +261,7 @@ Date: Thu, 18 Jan 2018 21:22:39 GMT
 
 *Изменить:*
 curl -i --user admin:password -H "Content-Type: application/json" -X PUT -d '{"dishId":100002,"price":"111.02"}' "$RESTAURANT/rest/restaurants/100006/prices/2018-01-19/100025"
+
 HTTP/1.1 204
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
@@ -268,7 +274,9 @@ Date: Thu, 18 Jan 2018 21:24:32 GMT
 
 *Удалить:*
 
-curl -i --user admin:password -X DELETE "$RESTAURANT/rest/restaurants/100006/prices/2018-01-19/100025"                                            HTTP/1.1 204
+curl -i --user admin:password -X DELETE "$RESTAURANT/rest/restaurants/100006/prices/2018-01-19/100025"
+
+HTTP/1.1 204
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -283,6 +291,7 @@ Date: Thu, 18 Jan 2018 21:41:43 GMT
 *Проголосовать/переголосовать:*
 
 curl -i --user user:password -X POST "$RESTAURANT/rest/restaurants/100006/votes"
+
 HTTP/1.1 204
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
@@ -297,10 +306,14 @@ Date: Thu, 18 Jan 2018 21:59:06 GMT
 
 Текущую:
 
-curl "$RESTAURANT/rest/restaurants/100006/votes"                  
+curl "$RESTAURANT/rest/restaurants/100006/votes"
+                  
 1
 
 Произвольную:
 
 curl "$RESTAURANT/rest/restaurants/100006/votes/2018-01-18"
+
 0
+
+
