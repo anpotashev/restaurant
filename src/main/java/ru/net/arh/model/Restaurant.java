@@ -12,7 +12,6 @@ import javax.persistence.NamedQuery;
 
 @NoArgsConstructor
 @Entity
-//@Table(name = "restaurant")
 @SQLDelete(sql = "UPDATE Restaurant SET deleted=true WHERE id=? ")
 @Loader(namedQuery = Restaurant.FIND_BY_ID)
 @Where(clause = "deleted=false")
@@ -20,6 +19,7 @@ import javax.persistence.NamedQuery;
         @NamedQuery(name = Restaurant.FIND_BY_ID, query = "SELECT r FROM Restaurant r WHERE r.id=?1 AND r.deleted=false")
 })
 public class Restaurant extends NamedBasedEntity {
+
     static final String FIND_BY_ID = "Restaurant.findById";
 
     public Restaurant(Integer id, String name) {

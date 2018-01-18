@@ -6,7 +6,7 @@ import ru.net.arh.model.Restaurant;
 import ru.net.arh.testdata.NamedBasedData;
 import ru.net.arh.testdata.RestaurantTestData;
 
-import static ru.net.arh.web.rest.RootRestController.ROOT_URL;
+import static ru.net.arh.web.rest.RootRest.ROOT_URL;
 
 @Slf4j
 public class RestaurantRestControllerTest extends AbstractNamedRestControllerTest<Restaurant> {

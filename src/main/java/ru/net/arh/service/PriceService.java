@@ -10,12 +10,12 @@ import java.util.List;
 public interface PriceService {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    boolean delete(LocalDate date, int id, int restaurantId);
+    boolean delete(LocalDate date, int restaurantId, int id);
 
-    List<Price> getAllForRestorantInDay(int restaurantId, LocalDate date);
+    List<MenuItem> getAllForRestorantInDay(LocalDate date, int restaurantId);
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     Price save(LocalDate date, int restaurantId, MenuItem menuItem);
 
-    Price get(int priceId, int restaurantId, LocalDate date);
+    MenuItem get(LocalDate date, int restaurantId, int priceId);
 }

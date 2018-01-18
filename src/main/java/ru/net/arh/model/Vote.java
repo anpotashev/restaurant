@@ -1,6 +1,9 @@
 package ru.net.arh.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.net.arh.model.key.VoteId;
 
 import javax.persistence.*;
@@ -8,9 +11,6 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Getter
-@Setter
-@EqualsAndHashCode
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -25,6 +25,7 @@ public class Vote {
     @EmbeddedId
     private VoteId key;
 
+    @Setter
     @ManyToOne
     @NotNull
     @JoinColumn(name = "restaurant_id")

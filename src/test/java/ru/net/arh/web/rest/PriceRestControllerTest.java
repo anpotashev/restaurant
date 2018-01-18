@@ -20,7 +20,7 @@ import static ru.net.arh.testdata.TestDBData.*;
 import static ru.net.arh.utils.MenuUtil.convertToMenuItem;
 import static ru.net.arh.web.JsonUtil.assertThat;
 import static ru.net.arh.web.JsonUtil.writeValue;
-import static ru.net.arh.web.rest.RootRestController.ROOT_URL;
+import static ru.net.arh.web.rest.RootRest.ROOT_URL;
 
 @Slf4j
 public class PriceRestControllerTest extends AbstractRestTestClass {

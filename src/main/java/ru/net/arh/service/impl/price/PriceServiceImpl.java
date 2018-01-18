@@ -10,6 +10,7 @@ import ru.net.arh.model.Price;
 import ru.net.arh.repository.PriceRepository;
 import ru.net.arh.service.PriceService;
 import ru.net.arh.to.menu.MenuItem;
+import ru.net.arh.utils.MenuUtil;
 import ru.net.arh.utils.validation.annotation.CheckForException;
 import ru.net.arh.utils.validation.annotation.CheckForFalseResult;
 import ru.net.arh.utils.validation.annotation.CheckForLocalDateParamBeforeToday;
@@ -35,22 +36,22 @@ public class PriceServiceImpl implements PriceService {
 
     @CheckForNullResult(status = HttpStatus.NOT_FOUND)
     @Override
-    public Price get(int priceId, int restaurantId, LocalDate date) {
-        return repository.get(priceId, restaurantId, date);
+    public MenuItem get(LocalDate date, int restaurantId, int priceId) {
+        return MenuUtil.convertToMenuItem(repository.get(priceId, restaurantId, date));
     }
 
     @CacheEvict(value = "menu", key = "#date")
     @CheckForFalseResult(status = HttpStatus.NOT_FOUND)
     @CheckForLocalDateParamBeforeToday(message = "You cannot delete price in the past", status = HttpStatus.NOT_ACCEPTABLE)
     @Override
-    public boolean delete(LocalDate date, int id, int restaurantId) {
+    public boolean delete(LocalDate date, int restaurantId, int id) {
         return repository.delete(date, id, restaurantId);
     }
 
     @Cacheable("menu")
     @Override
-    public List<Price> getAllForRestorantInDay(int restaurantId, LocalDate date) {
-        return repository.getAllForRestorantInDay(restaurantId, date);
+    public List<MenuItem> getAllForRestorantInDay(LocalDate date, int restaurantId) {
+        return MenuUtil.convertToMenuItems(repository.getAllForRestorantInDay(restaurantId, date));
     }
 
 }

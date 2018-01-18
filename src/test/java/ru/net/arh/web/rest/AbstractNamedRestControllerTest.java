@@ -94,19 +94,6 @@ public abstract class AbstractNamedRestControllerTest<T extends NamedBasedEntity
 
     @Test
     @WithMockUser(authorities = {"ROLE_ADMIN"})
-    public void createWithNonEmptyId() throws Exception {
-        mockMvc.perform(
-                post(getUri())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(writeValue(getTestData().changed()))
-        )
-                .andDo(print())
-                .andExpect(status().isNotAcceptable());
-        ;
-    }
-
-    @Test
-    @WithMockUser(authorities = {"ROLE_ADMIN"})
     public void update() throws Exception {
 
         mockMvc.perform(put(getUri() + "/" + getTestData().changed().getId())
@@ -132,20 +119,7 @@ public abstract class AbstractNamedRestControllerTest<T extends NamedBasedEntity
                 .content(writeValue(getTestData().changed()))
         )
                 .andDo(print())
-                .andExpect(status().isNotAcceptable())
-        ;
-    }
-
-    @Test
-    @WithMockUser(authorities = {"ROLE_ADMIN"})
-    public void updateWithEmptyId() throws Exception {
-
-        mockMvc.perform(put(getUri() + "/" + getTestData().changed().getId())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(writeValue(getTestData().create()))
-        )
-                .andDo(print())
-                .andExpect(status().isNotAcceptable())
+                .andExpect(status().isNotFound())
         ;
     }
 

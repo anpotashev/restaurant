@@ -10,7 +10,7 @@ import ru.net.arh.model.User;
 import ru.net.arh.service.UserService;
 
 @RestController
-@RequestMapping(RootRestController.ROOT_URL + "/users")
+@RequestMapping(RootRest.ROOT_URL + "/users")
 public class UserRestController {
 
     @Autowired

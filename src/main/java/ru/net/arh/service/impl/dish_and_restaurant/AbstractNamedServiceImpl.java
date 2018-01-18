@@ -40,7 +40,7 @@ public abstract class AbstractNamedServiceImpl<T extends NamedBasedEntity> imple
             @CacheEvict(value = "basecache", key = "{#root.targetClass.name}")
             , @CacheEvict(value = "basecache", key = "{#root.targetClass.name, #value.id}")
     })
-    public T save(final T value) {
+    public T save(T value) {
         return getRepository().save(value);
     }
 

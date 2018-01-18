@@ -5,24 +5,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.net.arh.model.Restaurant;
-import ru.net.arh.web.controller.AbstractNamedController;
+import ru.net.arh.service.AbstractNamedService;
+import ru.net.arh.service.RestaurantService;
 
 @Slf4j
 @RestController
-@RequestMapping(RootRestController.ROOT_URL + "/restaurants")
+@RequestMapping(RootRest.ROOT_URL + "/restaurants")
 public class RestaurantRestController extends AbstractNamedBasedRestController<Restaurant> {
 
 
     @Autowired
-    private AbstractNamedController restaurantController;
+    private RestaurantService restaurantService;
 
     @Override
-    public AbstractNamedController<Restaurant> getController() {
-        return restaurantController;
+    protected AbstractNamedService<Restaurant> gerService() {
+        return restaurantService;
     }
 
     @Override
     public String getUri() {
-        return RootRestController.ROOT_URL + "/restaurants";
+        return RootRest.ROOT_URL + "/restaurants";
     }
 }

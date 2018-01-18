@@ -6,7 +6,7 @@ import ru.net.arh.model.Dish;
 import ru.net.arh.testdata.DishTestData;
 import ru.net.arh.testdata.NamedBasedData;
 
-import static ru.net.arh.web.rest.RootRestController.ROOT_URL;
+import static ru.net.arh.web.rest.RootRest.ROOT_URL;
 
 @Slf4j
 public class DishRestControllerTest extends AbstractNamedRestControllerTest<Dish> {

@@ -13,7 +13,6 @@ import javax.validation.constraints.Size;
 import java.util.EnumSet;
 import java.util.Set;
 
-//@Slf4j
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,15 +21,10 @@ import java.util.Set;
 @Table(name = "users")
 public class User extends AbstractBaseEntity implements UserDetails {
 
-    //    @Column(name = "username", nullable = false)
-//    @NotBlank
     @NotNull
     @Size(min = 2, max = 64)
     private String username;
 
-
-    //    @Column(name = "password", nullable = false)
-//    @NotBlank
     @NotNull
     @Size(min = 5, max = 64)
     private String password;

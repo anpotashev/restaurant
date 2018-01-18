@@ -1,26 +1,26 @@
 package ru.net.arh.model.mapped;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
 
-//lombok
-@EqualsAndHashCode
+@Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-//persitence
+
 @MappedSuperclass
 @Access(AccessType.FIELD)
+
 public abstract class AbstractBaseEntity extends Object {
     public static final int START_SEQ = 100000;
 
-    @Getter
-    @Setter
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = START_SEQ)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     protected Integer id;
 
     @Override

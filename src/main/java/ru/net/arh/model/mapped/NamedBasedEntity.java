@@ -14,19 +14,15 @@ import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-//lombok
 @Slf4j
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-//persitence
 @MappedSuperclass
 @Access(AccessType.FIELD)
 public class NamedBasedEntity extends AbstractBaseEntity {
 
-    public static final String FIND_BY_FIRST_PART_OF_NAME_NAMED_QUERY = "NamedBasedQuery.findByFirstPartOfName";
     @NotNull
-//    @NotBlank
     @Size(min = 2, max = 100)
     @Column(name = "name")
     protected String name;

@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.net.arh.testdata.TestDBData.*;
 import static ru.net.arh.web.JsonUtil.assertThat;
-import static ru.net.arh.web.rest.RootRestController.ROOT_URL;
+import static ru.net.arh.web.rest.RootRest.ROOT_URL;
 
 @Slf4j
 
