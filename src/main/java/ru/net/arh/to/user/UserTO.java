@@ -15,10 +15,10 @@ import javax.validation.constraints.Size;
 public class UserTO {
     @NotNull
     @Size(min = 2, max = 64)
-    String username;
+    private String username;
 
     @NotNull
     @Size(min = 5, max = 64)
-    String password;
+    private String password;
 
 }

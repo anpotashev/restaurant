@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import ru.net.arh.model.Price;
@@ -26,6 +27,10 @@ public class PriceServiceImpl implements PriceService {
     @Autowired
     private PriceRepository repository;
 
+    @Caching(evict = {
+            @CacheEvict(value = "menu", key = "{#date, #restaurantId}")
+            , @CacheEvict(value = "menu", key = "{#date, #restaurantId, #menuItem.id}")
+    })
     @CheckForException(message = "Error during creating or changing price", status = HttpStatus.NOT_MODIFIED)
     @CheckForLocalDateParamBeforeToday(message = "You cannot create/change price in the past", status = HttpStatus.NOT_ACCEPTABLE)
     @CheckForNullResult(status = HttpStatus.NOT_MODIFIED)
@@ -34,13 +39,17 @@ public class PriceServiceImpl implements PriceService {
         return repository.save(date, restaurantId, menuItem);
     }
 
+    @Cacheable(value = "menu", key = "{#date, #restaurantId, #priceId}")
     @CheckForNullResult(status = HttpStatus.NOT_FOUND)
     @Override
     public MenuItem get(LocalDate date, int restaurantId, int priceId) {
         return MenuUtil.convertToMenuItem(repository.get(priceId, restaurantId, date));
     }
 
-    @CacheEvict(value = "menu", key = "#date")
+    @Caching(evict = {
+            @CacheEvict(value = "menu", key = "{#date, #restaurantId}")
+            , @CacheEvict(value = "menu", key = "{#date, #restaurantId, #id}")
+    })
     @CheckForFalseResult(status = HttpStatus.NOT_FOUND)
     @CheckForLocalDateParamBeforeToday(message = "You cannot delete price in the past", status = HttpStatus.NOT_ACCEPTABLE)
     @Override
@@ -48,7 +57,7 @@ public class PriceServiceImpl implements PriceService {
         return repository.delete(date, id, restaurantId);
     }
 
-    @Cacheable("menu")
+    @Cacheable(value = "menu", key = "{#date, #restaurantId}")
     @Override
     public List<MenuItem> getAllForRestorantInDay(LocalDate date, int restaurantId) {
         return MenuUtil.convertToMenuItems(repository.getAllForRestorantInDay(restaurantId, date));
