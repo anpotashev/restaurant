@@ -5,7 +5,7 @@ import ru.net.arh.model.mapped.NamedBasedEntity;
 
 import java.util.List;
 
-public interface AbstractNamedService<T extends NamedBasedEntity> extends AbstractBaseService<T> {
+public interface AbstractNamedService<T extends NamedBasedEntity> {
     T get(int id);
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")

@@ -1,4 +1,4 @@
-package ru.net.arh.service.impl.abstractimpl;
+package ru.net.arh.service.impl.dish_and_restaurant;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -28,7 +28,7 @@ public abstract class AbstractNamedServiceImpl<T extends NamedBasedEntity> imple
 
     @CheckForNullResult(status = HttpStatus.NOT_FOUND)
     @Override
-    @Cacheable(cacheNames = "basecache", key = "{#id}")
+    @Cacheable(cacheNames = "basecache", key = "{#root.targetClass.name, #id}")
     public T get(int id) {
         return getRepository().find(id);
     }
@@ -38,7 +38,7 @@ public abstract class AbstractNamedServiceImpl<T extends NamedBasedEntity> imple
     @Override
     @Caching(evict = {
             @CacheEvict(value = "basecache", key = "{#root.targetClass.name}")
-            , @CacheEvict(value = "basecache", key = "{#value.id}")
+            , @CacheEvict(value = "basecache", key = "{#root.targetClass.name, #value.id}")
     })
     public T save(final T value) {
         return getRepository().save(value);
@@ -48,7 +48,7 @@ public abstract class AbstractNamedServiceImpl<T extends NamedBasedEntity> imple
     @Override
     @Caching(evict = {
             @CacheEvict(value = "basecache", key = "{#root.targetClass.name}")
-            , @CacheEvict(value = "basecache", key = "{#id}")
+            , @CacheEvict(value = "basecache", key = "{#root.targetClass.name, #id}")
     })
     public boolean delete(int id) {
         return getRepository().delete(id);
@@ -60,8 +60,6 @@ public abstract class AbstractNamedServiceImpl<T extends NamedBasedEntity> imple
         return getRepository().findAll();
     }
 
-    @Override
-    @Cacheable(cacheNames = "basecache", key = "{#root.targetClass.name, #root.method.name, #firstPartOfName}")
     public List<T> findAllByFirstPartOfNameIgnoringCase(String firstPartOfName) {
         return getRepository().findAllByFirstPartOfNameIgnoringCase(firstPartOfName);
     }
