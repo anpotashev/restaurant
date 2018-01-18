@@ -10,12 +10,11 @@ import ru.net.arh.model.mapped.NamedBasedEntity;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 
 @Slf4j
 @Entity
 @NoArgsConstructor
-@Table(name = "dish")
+//@Table(name = "dish")
 @SQLDelete(sql = "UPDATE Dish SET deleted=true WHERE id=? ")
 @Loader(namedQuery = Dish.FIND_BY_ID)
 @Where(clause = "deleted=false")

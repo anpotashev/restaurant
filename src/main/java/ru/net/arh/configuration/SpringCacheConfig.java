@@ -32,9 +32,6 @@ public class SpringCacheConfig {
 
         factoryBean.setBeanClassLoader(getClass().getClassLoader());
         factoryBean.setCacheManagerUri(new ClassPathResource(env.getProperty("ehcache.uri")).getURI());
-
-//        URI uri = env.getProperty("ehcache.uri", URI.class);
-//        factoryBean.setCacheManagerUri(uri);
         return factoryBean;
     }
 }

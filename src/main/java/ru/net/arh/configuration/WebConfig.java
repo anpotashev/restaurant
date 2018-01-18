@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(value = "ru.net.arh.web")
+@ComponentScan(value = "ru.net.arh.**.web")
 @EnableWebSecurity
 public class WebConfig implements WebMvcConfigurer {
 

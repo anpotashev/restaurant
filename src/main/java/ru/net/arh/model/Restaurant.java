@@ -9,11 +9,10 @@ import ru.net.arh.model.mapped.NamedBasedEntity;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 
 @NoArgsConstructor
 @Entity
-@Table(name = "restaurant")
+//@Table(name = "restaurant")
 @SQLDelete(sql = "UPDATE Restaurant SET deleted=true WHERE id=? ")
 @Loader(namedQuery = Restaurant.FIND_BY_ID)
 @Where(clause = "deleted=false")

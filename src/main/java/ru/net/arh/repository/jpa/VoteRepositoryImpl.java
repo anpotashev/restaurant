@@ -23,7 +23,7 @@ public class VoteRepositoryImpl implements VoteRepository {
 
     @Override
     @Transactional
-    public Vote create(final int userId, final int restaurantId) {
+    public Vote create(int userId, int restaurantId) {
         if (find(userId, LocalDate.now()) != null)
             return null;
         return em.merge(getVote(userId, restaurantId, LocalDate.now()));
@@ -31,7 +31,7 @@ public class VoteRepositoryImpl implements VoteRepository {
 
     @Override
     @Transactional
-    public Vote updateOrCreate(final int userId, final int restaurantId) {
+    public Vote updateOrCreate(int userId, int restaurantId) {
         Vote vote = find(userId, LocalDate.now());
         if (vote == null) {
             return em.merge(getVote(userId, restaurantId, LocalDate.now()));
@@ -43,19 +43,19 @@ public class VoteRepositoryImpl implements VoteRepository {
     }
 
     @Override
-    public int getRestaurantVotesForDay(final int restaurantId, final LocalDate date) {
+    public int getRestaurantVotesForDay(int restaurantId, LocalDate date) {
         return (em.createNamedQuery(Vote.GET_VOTES_COUNT_FOR_RESTAURANTS_AND_DATE_QUERY_NAME, Long.class)
                 .setParameter("restaurantId", restaurantId)
                 .setParameter("date", date)
                 .getSingleResult()).intValue();
     }
 
-    private VoteId getVoteId(final int userId, final LocalDate date) {
+    private VoteId getVoteId(int userId, LocalDate date) {
         User user = em.getReference(User.class, userId);
         return new VoteId(user, date);
     }
 
-    private Vote getVote(final int userId, final int restaurantId, final LocalDate date) {
+    private Vote getVote(int userId, int restaurantId, LocalDate date) {
         VoteId voteId = getVoteId(userId, date);
         Restaurant restaurant = em.getReference(Restaurant.class, restaurantId);
         return new Vote(voteId, restaurant);

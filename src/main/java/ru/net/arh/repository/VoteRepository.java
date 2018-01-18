@@ -6,10 +6,10 @@ import java.time.LocalDate;
 
 public interface VoteRepository {
 
-    Vote create(final int userId, final int restaurantId);
+    Vote create(int userId, int restaurantId);
 
-    Vote updateOrCreate(final int userId, final int restaurantId);
+    Vote updateOrCreate(int userId, int restaurantId);
 
-    int getRestaurantVotesForDay(final int restaurantId, final LocalDate date);
+    int getRestaurantVotesForDay(int restaurantId, LocalDate date);
 
 }

@@ -8,11 +8,11 @@ import java.util.List;
 
 public interface PriceRepository {
 
-    boolean delete(LocalDate date, final int id, int restaurantId);
+    boolean delete(LocalDate date, int id, int restaurantId);
 
-    List<Price> getAllForRestorantInDay(final int restaurantId, final LocalDate date);
+    List<Price> getAllForRestorantInDay(int restaurantId, LocalDate date);
 
-    Price save(final LocalDate date, final int restaurantId, MenuItem menuItem);
+    Price save(LocalDate date, int restaurantId, MenuItem menuItem);
 
     Price get(int id, int restaurantId, LocalDate date);
 }

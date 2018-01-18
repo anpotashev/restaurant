@@ -48,23 +48,23 @@ public class PriceRepositoryImpl implements PriceRepository {
 
     @Override
     @Transactional
-    public boolean delete(LocalDate date, final int id, int restaurantId) {
+    public boolean delete(LocalDate date, int id, int restaurantId) {
         return priceRepository.deleteByIdAndDateAndRestaurantId(id, date, restaurantId) > 0;
     }
 
 
     @Override
-    public List<Price> getAllForRestorantInDay(final int restaurantId, final LocalDate date) {
+    public List<Price> getAllForRestorantInDay(int restaurantId, LocalDate date) {
         return priceRepository.getAllByRestaurantIdAndDateOrderByDishId(restaurantId, date);
     }
 
-    private Price getPrice(final Integer id, final int restaurantId, final int dishId, final LocalDate date, final double price) {
+    private Price getPrice(Integer id, int restaurantId, int dishId, LocalDate date, double price) {
         Price result = getPrice(restaurantId, dishId, date, price);
         result.setId(id);
         return result;
     }
 
-    private Price getPrice(final int restaurantId, final int dishId, final LocalDate date, final double price) {
+    private Price getPrice(int restaurantId, int dishId, LocalDate date, double price) {
         Restaurant restaurant = restaurantRepository.getOne(restaurantId);
         Dish dish = dishRepository.getOne(dishId);
         return new Price(restaurant, dish, date, price);

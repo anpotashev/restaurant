@@ -24,16 +24,4 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
         return new String[]{"/"};
     }
 
-//    @Override
-//    protected FilterRegistration.Dynamic registerServletFilter(ServletContext servletContext, Filter filter) {
-//        return super.registerServletFilter(servletContext, filter);
-//    }
-//
-//    @Nullable
-//    @Override
-//    protected Filter[] getServletFilters() {
-//        return super.getServletFilters();
-//    }
-
-
 }
