@@ -67,6 +67,7 @@ REST:
 
 
 ****API****
+
 | - | - |
 |---:|:---|
 | URI | /rest/restaurants |
