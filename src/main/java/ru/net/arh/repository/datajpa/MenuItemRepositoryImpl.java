@@ -6,10 +6,10 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.net.arh.model.Dish;
-import ru.net.arh.model.Price;
+import ru.net.arh.model.MenuItem;
 import ru.net.arh.model.Restaurant;
-import ru.net.arh.repository.PriceRepository;
-import ru.net.arh.to.menu.MenuItem;
+import ru.net.arh.repository.MenuItemRepository;
+import ru.net.arh.to.menu.MenuItemTo;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,10 +18,10 @@ import java.util.List;
 @Repository
 @Transactional(readOnly = true)
 @PropertySource("classpath:db/db.properties")
-public class PriceRepositoryImpl implements PriceRepository {
+public class MenuItemRepositoryImpl implements MenuItemRepository {
 
     @Autowired
-    private DataJpaPriceRepository priceRepository;
+    private DataJpaMenuItemRepository priceRepository;
     @Autowired
     private DataJpaRestaurantRepository restaurantRepository;
     @Autowired
@@ -29,21 +29,21 @@ public class PriceRepositoryImpl implements PriceRepository {
 
     @Override
     @Transactional
-    public Price save(LocalDate date, int restaurantId, MenuItem menuItem) {
-        if (menuItem.getId() != null && get(menuItem.getId(), restaurantId, date) == null) {
+    public MenuItem save(LocalDate date, int restaurantId, MenuItemTo menuItemTo) {
+        if (menuItemTo.getId() != null && get(menuItemTo.getId(), restaurantId, date) == null) {
             return null;
         }
-        Price price = getPrice(date, restaurantId, menuItem);
-        return priceRepository.save(price);
+        MenuItem menuItem = getPrice(date, restaurantId, menuItemTo);
+        return priceRepository.save(menuItem);
     }
 
     @Override
-    public Price get(int id, int restaurantId, LocalDate date) {
+    public MenuItem get(int id, int restaurantId, LocalDate date) {
         return priceRepository.getByIdAndRestaurantIdAndDate(id, restaurantId, date).orElse(null);
     }
 
-    private Price getPrice(LocalDate date, int restaurantId, MenuItem menuItem) {
-        return getPrice(menuItem.getId(), restaurantId, menuItem.getDishId(), date, menuItem.getPrice());
+    private MenuItem getPrice(LocalDate date, int restaurantId, MenuItemTo menuItemTo) {
+        return getPrice(menuItemTo.getId(), restaurantId, menuItemTo.getDishId(), date, menuItemTo.getPrice());
     }
 
     @Override
@@ -54,20 +54,20 @@ public class PriceRepositoryImpl implements PriceRepository {
 
 
     @Override
-    public List<Price> getAllForRestorantInDay(int restaurantId, LocalDate date) {
+    public List<MenuItem> getAllForRestorantInDay(int restaurantId, LocalDate date) {
         return priceRepository.getAllByRestaurantIdAndDateOrderByDishId(restaurantId, date);
     }
 
-    private Price getPrice(Integer id, int restaurantId, int dishId, LocalDate date, double price) {
-        Price result = getPrice(restaurantId, dishId, date, price);
+    private MenuItem getPrice(Integer id, int restaurantId, int dishId, LocalDate date, double price) {
+        MenuItem result = getPrice(restaurantId, dishId, date, price);
         result.setId(id);
         return result;
     }
 
-    private Price getPrice(int restaurantId, int dishId, LocalDate date, double price) {
+    private MenuItem getPrice(int restaurantId, int dishId, LocalDate date, double price) {
         Restaurant restaurant = restaurantRepository.getOne(restaurantId);
         Dish dish = dishRepository.getOne(dishId);
-        return new Price(restaurant, dish, date, price);
+        return new MenuItem(restaurant, dish, date, price);
     }
 
 }

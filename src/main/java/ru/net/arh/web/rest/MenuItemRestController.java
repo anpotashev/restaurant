@@ -6,9 +6,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import ru.net.arh.model.Price;
-import ru.net.arh.service.PriceService;
-import ru.net.arh.to.menu.MenuItem;
+import ru.net.arh.model.MenuItem;
+import ru.net.arh.service.MenuItemService;
+import ru.net.arh.to.menu.MenuItemTo;
 
 import java.net.URI;
 import java.time.LocalDate;
@@ -32,53 +32,53 @@ DELETE /restaurants/{restaurantId}/prices/{date}/{id} - delete price with id
  */
 @Slf4j
 @RestController
-@RequestMapping(RootRest.ROOT_URL + "/restaurants/{restaurantId}/prices")
-public class PriceRestController {
+@RequestMapping(RootRest.ROOT_URL + "/restaurants/{restaurantId}/menu_items")
+public class MenuItemRestController {
 
     @Autowired
-    private PriceService priceService;
+    private MenuItemService menuItemService;
 
     @GetMapping
-    public ResponseEntity<List<MenuItem>> getForCurDate(@PathVariable("restaurantId") int restaurantId
+    public ResponseEntity<List<MenuItemTo>> getForCurDate(@PathVariable("restaurantId") int restaurantId
     ) {
-        return ResponseEntity.ok(priceService.getAllForRestorantInDay(LocalDate.now(), restaurantId));
+        return ResponseEntity.ok(menuItemService.getAllForRestorantInDay(LocalDate.now(), restaurantId));
     }
 
     @GetMapping("/{date}")
-    public ResponseEntity<List<MenuItem>> get(@PathVariable("restaurantId") int restaurantId
+    public ResponseEntity<List<MenuItemTo>> get(@PathVariable("restaurantId") int restaurantId
             , @PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date
     ) {
-        return ResponseEntity.ok(priceService.getAllForRestorantInDay(date, restaurantId));
+        return ResponseEntity.ok(menuItemService.getAllForRestorantInDay(date, restaurantId));
     }
 
     @GetMapping("/{date}/{id}")
-    public ResponseEntity<MenuItem> get(@PathVariable("restaurantId") int restaurantId
+    public ResponseEntity<MenuItemTo> get(@PathVariable("restaurantId") int restaurantId
             , @PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date
             , @PathVariable("id") int priceId
     ) {
-        return ResponseEntity.ok(priceService.get(date, restaurantId, priceId));
+        return ResponseEntity.ok(menuItemService.get(date, restaurantId, priceId));
     }
 
     @PutMapping("/{date}/{id}")
     public ResponseEntity<Void> update(@PathVariable("restaurantId") int restaurantId
             , @PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date
             , @PathVariable("id") int id
-            , @RequestBody MenuItem menuItem
+            , @RequestBody MenuItemTo menuItemTo
     ) {
-        menuItem.setId(id);
-        priceService.save(date, restaurantId, menuItem);
+        menuItemTo.setId(id);
+        menuItemService.save(date, restaurantId, menuItemTo);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/{date}")
     public ResponseEntity<Void> create(@PathVariable("restaurantId") int restaurantId
             , @PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date
-            , @RequestBody MenuItem menuItem
+            , @RequestBody MenuItemTo menuItemTo
     ) {
-        menuItem.setId(null);
-        Price created = priceService.save(date, restaurantId, menuItem);
+        menuItemTo.setId(null);
+        MenuItem created = menuItemService.save(date, restaurantId, menuItemTo);
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(RootRest.ROOT_URL + "/restaurants/{restaurantId}/prices/{date}/{id}")
+                .path(RootRest.ROOT_URL + "/restaurants/{restaurantId}/menu_items/{date}/{id}")
                 .buildAndExpand(restaurantId, date, created.getId())
                 .toUri();
         return ResponseEntity.created(uri).build();
@@ -89,7 +89,7 @@ public class PriceRestController {
             , @PathVariable("id") int id
             , @PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date
     ) {
-        priceService.delete(date, restaurantId, id);
+        menuItemService.delete(date, restaurantId, id);
         return ResponseEntity.noContent().build();
     }
 

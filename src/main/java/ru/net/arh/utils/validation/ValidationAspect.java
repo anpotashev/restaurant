@@ -55,7 +55,7 @@ public class ValidationAspect {
 
     @AfterReturning(value = "checkForFalseResutl() && @annotation(annotation)", returning = "result")
     public void checkResult2(boolean result, CheckForFalseResult annotation) {
-        if (result == false) {
+        if (!result) {
             throw new ValidationException(annotation.message(), annotation.status());
         }
     }

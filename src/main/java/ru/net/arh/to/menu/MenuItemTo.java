@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MenuItem {
+public class MenuItemTo {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Integer id;
     private int dishId;

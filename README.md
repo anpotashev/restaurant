@@ -59,9 +59,9 @@ REST:
 | Restaurant | /rest/restaurants/{r_id} | list | - | edit | delete
 | Dish | /rest/dishes| list all | new | - | -
 | Dish | /rest/dishes/{r_id} | list | - | edit | delete
-| MenuItem | /rest/restaurants/{r_id}/prices/ | list all | - | - |
-| MenuItem | /rest/restaurants/{r_id}/prices/{date} | list all | new | - |
-| MenuItem | /rest/restaurants/{r_id}/prices/{date}/{id} | list | - | edit | delete
+| MenuItem | /rest/restaurants/{r_id}/menu_items/ | list all | - | - |
+| MenuItem | /rest/restaurants/{r_id}/menu_items/{date} | list all | new | - |
+| MenuItem | /rest/restaurants/{r_id}/menu_items/{date}/{id} | list | - | edit | delete
 | Vote | /rest/restaurants/{r_id}/votes| get count | (re)vote | - | -
 | Vote | /rest/restaurants/{r_id}/votes/{date}| get count | - | - | -
 
@@ -210,7 +210,7 @@ __________________________________
 
 | - | - |
 |:---|:---|
-| URI | /rest/restaurants/{r_id}/prices/ |
+| URI | /rest/restaurants/{r_id}/menu_items/ |
 | метод | GET |
 | формат принимаемых данных | - |
 | формат возвращаемых данных | JSON |
@@ -224,7 +224,7 @@ __________________________________
 
 | - | - |
 |:---|:---|
-| URI | /rest/restaurants/{r_id}/prices/{date} |
+| URI | /rest/restaurants/{r_id}/menu_items/{date} |
 | метод | GET |
 | формат принимаемых данных | - |
 | формат возвращаемых данных | JSON |
@@ -234,7 +234,7 @@ __________________________________
 
 | - | - |
 |:---|:---|
-| URI | /rest/restaurants/{r_id}/prices/{date}/{id} |
+| URI | /rest/restaurants/{r_id}/menu_items/{date}/{id} |
 | метод | GET |
 | формат принимаемых данных | - |
 | формат возвращаемых данных | JSON |
@@ -244,7 +244,7 @@ __________________________________
 
 | - | - |
 |:---|:---|
-| URI | /rest/restaurants/{r_id}/prices/{date}/{id} |
+| URI | /rest/restaurants/{r_id}/menu_items/{date}/{id} |
 | метод | POST |
 | формат принимаемых данных | JSON |
 | Принимаемые данные | `{"price":price,"dishId":dishId}` |
@@ -254,7 +254,7 @@ __________________________________
 
 | - | - |
 |:---|:---|
-| URI | /rest/restaurants/{r_id}/prices/{date}/{id} |
+| URI | /rest/restaurants/{r_id}/menu_items/{date}/{id} |
 | метод | PUT |
 | Принимаемые данные | `{"price":price,"dishId":dishId}` |
 | формат принимаемых данных | JSON |
@@ -265,7 +265,7 @@ __________________________________
 
 | - | - |
 |:---|:---|
-| URI | /rest/restaurants/{r_id}/prices/{date}/{id} |
+| URI | /rest/restaurants/{r_id}/menu_items/{date}/{id} |
 | метод | DELETE |
 | формат принимаемых данных | - |
 | формат возвращаемых данных | - |
@@ -430,7 +430,7 @@ $RESTAURANT/rest/dishes
 
 Текущая дата:
 
-curl "$RESTAURANT/rest/restaurants/100004/prices/" |json_pp
+curl "$RESTAURANT/rest/restaurants/100004/menu_items/" |json_pp
 
 ```
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
@@ -460,7 +460,7 @@ curl "$RESTAURANT/rest/restaurants/100004/prices/" |json_pp
 
 Произвольная дата:
 
-curl "$RESTAURANT/rest/restaurants/100004/prices/2018-01-18" |json_pp
+curl "$RESTAURANT/rest/restaurants/100004/menu_items/2018-01-18" |json_pp
 
 ```
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
@@ -490,7 +490,7 @@ curl "$RESTAURANT/rest/restaurants/100004/prices/2018-01-18" |json_pp
 
 *Конкретный пункт меню:*
 
-curl "$RESTAURANT/rest/restaurants/100004/prices/2018-01-18/100019" |json_pp
+curl "$RESTAURANT/rest/restaurants/100004/menu_items/2018-01-18/100019" |json_pp
 
 ```  
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
@@ -508,7 +508,7 @@ curl "$RESTAURANT/rest/restaurants/100004/prices/2018-01-18/100019" |json_pp
 
 Дата должна быть не раньше текущей.
 
-curl -i --user admin:password -H "Content-Type: application/json" -X POST -d '{"dishId":100003,"price":"100.02"}' "$RESTAURANT/rest/restaurants/100006/prices/2018-01-19"
+curl -i --user admin:password -H "Content-Type: application/json" -X POST -d '{"dishId":100003,"price":"100.02"}' "$RESTAURANT/rest/restaurants/100006/menu_items/2018-01-19"
 
 ```
 HTTP/1.1 201
@@ -519,14 +519,14 @@ Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
 Set-Cookie: JSESSIONID=0DF35078B4F8FD2AC7BBBEBFDCB48C8E; Path=/; HttpOnly
-Location: http://172.16.1.11:8081/rest/restaurants/100006/prices/2018-01-19/100025
+Location: http://172.16.1.11:8081/rest/restaurants/100006/menu_items/2018-01-19/100025
 Content-Length: 0
 Date: Thu, 18 Jan 2018 21:22:39 GMT
 ```
 
 *Изменить:*
 
-curl -i --user admin:password -H "Content-Type: application/json" -X PUT -d '{"dishId":100002,"price":"111.02"}' "$RESTAURANT/rest/restaurants/100006/prices/2018-01-19/100025"
+curl -i --user admin:password -H "Content-Type: application/json" -X PUT -d '{"dishId":100002,"price":"111.02"}' "$RESTAURANT/rest/restaurants/100006/menu_items/2018-01-19/100025"
 
 ```
 HTTP/1.1 204
@@ -542,7 +542,7 @@ Date: Thu, 18 Jan 2018 21:24:32 GMT
 
 *Удалить:*
 
-curl -i --user admin:password -X DELETE "$RESTAURANT/rest/restaurants/100006/prices/2018-01-19/100025"
+curl -i --user admin:password -X DELETE "$RESTAURANT/rest/restaurants/100006/menu_items/2018-01-19/100025"
 
 ```
 HTTP/1.1 204

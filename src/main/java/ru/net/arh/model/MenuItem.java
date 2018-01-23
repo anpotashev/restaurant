@@ -22,7 +22,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Price extends AbstractBaseEntity {
+@Table(name = "menu_item")
+public class MenuItem extends AbstractBaseEntity {
     private static final MathContext PRICE_ROUNT = new MathContext(4, RoundingMode.HALF_UP);
 
     @JsonIgnore
@@ -47,11 +48,11 @@ public class Price extends AbstractBaseEntity {
     @DecimalMin("0.0001")
     private BigDecimal price;
 
-    public Price(Restaurant restaurant, Dish dish, LocalDate date, double price) {
+    public MenuItem(Restaurant restaurant, Dish dish, LocalDate date, double price) {
         this(restaurant, dish, date, new BigDecimal(price).round(PRICE_ROUNT).setScale(2));
     }
 
-    public Price(Integer id, Restaurant restaurant, Dish dish, LocalDate date, double price) {
+    public MenuItem(Integer id, Restaurant restaurant, Dish dish, LocalDate date, double price) {
         this(restaurant, dish, date, price);
         this.id = id;
     }

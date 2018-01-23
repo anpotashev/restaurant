@@ -1,4 +1,4 @@
-DELETE FROM price;
+DELETE FROM menu_item;
 DELETE FROM vote;
 DELETE FROM user_roles;
 DELETE FROM dish;
@@ -35,7 +35,7 @@ INSERT INTO user_roles (role, user_id) VALUES
   ('ROLE_USER', 100011),
   ('ROLE_USER', 100012);
 
-INSERT INTO price (restaurant_id, dish_id, date, price) VALUES
+INSERT INTO menu_item (restaurant_id, dish_id, date, price) VALUES
   (100004, 100001, CURRENT_DATE, 10.11),
   (100004, 100002, CURRENT_DATE, 10.12),
   (100004, 100003, CURRENT_DATE, 10.13),
